@@ -7,6 +7,9 @@ Project {
     minimumQbsVersion: "1.18.0"
     qbsSearchPaths: ["qbs"]
 
+    property bool useSodium: false
+    property string sodiumVersion: "1.0.18"
+
     readonly property var projectVersion: projectProbe.projectVersion
     readonly property string projectGitRevision: projectProbe.projectGitRevision
 
@@ -41,9 +44,6 @@ Project {
             "LOGGER_LESS_SNPRINTF"
         ];
 
-        if (qbs.buildVariant === "release")
-            def.push("NDEBUG");
-
 //        if (qbs.targetOS.contains("windows")
 //            && qbs.toolchain && qbs.toolchain.contains("mingw"))
 //        {
@@ -51,6 +51,12 @@ Project {
 //        }
 //        else
 //            def.push("CONFIG_DIR=\"/etc/pproto-demo\"");
+
+        if (useSodium === true)
+            def.push("SODIUM_ENCRYPTION");
+
+        if (qbs.buildVariant === "release")
+            def.push("NDEBUG");
 
         return def;
     }
@@ -66,6 +72,7 @@ Project {
     property string cxxLanguageVersion: "c++17"
 
     references: [
+        "src/demo/serialize/serialize.qbs",
         "src/pproto/pproto.qbs",
         "src/rapidjson/rapidjson.qbs",
         "src/shared/shared.qbs",
