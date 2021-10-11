@@ -1,0 +1,15 @@
+build
+
+*.qbs.user*
+*.autosave
+qgit_*
+.project
+
+.idea
+**/.idea
+__pycache__/
+**/__pycache__/
+*.pyc
+**/*.pyc
+venv/
+**/venv/
