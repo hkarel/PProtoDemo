@@ -1,3 +1,7 @@
+/**
+  Простейший пример бинарной сериализации. Порядок следования полей в функциях
+  сериализации изменяться не должен
+*/
 
 #include "shared/logger/logger.h"
 #include "shared/logger/format.h"
@@ -86,7 +90,6 @@ int main(int /*argc*/, char* /*argv*/[])
         log_info << "value5: " << data2.value5;
     }
 
-    log_info << "Stop 'Serialize Demo 01'";
     alog::stop();
     return 0;
 }
