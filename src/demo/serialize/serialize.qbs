@@ -44,4 +44,14 @@ Project {
         ]
     }
 
+    SerializeBase {
+        name: "SDemo 05"
+        targetName: "sdemo05"
+        condition: true
+
+        files: [
+            "sdemo05/sdemo05.cpp",
+        ]
+    }
+
 }
