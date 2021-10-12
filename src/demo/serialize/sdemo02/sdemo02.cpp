@@ -77,19 +77,18 @@ using namespace pproto::data;
 int main(int /*argc*/, char* /*argv*/[])
 {
     alog::logger().start();
-    alog::logger().addSaverStdOut(alog::Level::Debug2);
+    alog::logger().addSaverStdOut(alog::Level::Debug2, true);
 
     log_info << "Start 'Serialize Demo 02'";
-
     QByteArray buff;
 
     StructDataOld dataOld;
+    dataOld.value1 = 1;
+    dataOld.value2 = 2;
+
     { //Block for QDataStream
         QDataStream stream {&buff, QIODevice::WriteOnly};
         STREAM_INIT(stream);
-
-        dataOld.value1 = 1;
-        dataOld.value2 = 2;
         stream << dataOld;
     }
 
@@ -98,13 +97,12 @@ int main(int /*argc*/, char* /*argv*/[])
         QDataStream stream {buff};
         STREAM_INIT(stream);
         stream >> dataNew;
-
-        log_info << "---";
-        log_info << "New value1: " << dataNew.value1;
-        log_info << "New value2: " << dataNew.value2;
-        log_info << "New value3: " << dataNew.value3;
-        log_info << "New value4: " << dataNew.value4;
     }
+    log_info << "---";
+    log_info << "New value1: " << dataNew.value1;
+    log_info << "New value2: " << dataNew.value2;
+    log_info << "New value3: " << dataNew.value3;
+    log_info << "New value4: " << dataNew.value4;
 
     dataNew.value1 = 5;
     dataNew.value2 = 6;
@@ -123,11 +121,10 @@ int main(int /*argc*/, char* /*argv*/[])
         QDataStream stream {buff};
         STREAM_INIT(stream);
         stream >> dataOld2;
-
-        log_info << "---";
-        log_info << "Old value1: " << dataOld2.value1;
-        log_info << "Old value2: " << dataOld2.value2;
     }
+    log_info << "---";
+    log_info << "Old value1: " << dataOld2.value1;
+    log_info << "Old value2: " << dataOld2.value2;
 
     alog::stop();
     return 0;

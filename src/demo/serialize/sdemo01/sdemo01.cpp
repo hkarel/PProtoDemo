@@ -56,39 +56,37 @@ using namespace pproto::data;
 int main(int /*argc*/, char* /*argv*/[])
 {
     alog::logger().start();
-    alog::logger().addSaverStdOut(alog::Level::Debug2);
+    alog::logger().addSaverStdOut(alog::Level::Debug2, true);
 
     log_info << "Start 'Serialize Demo 01'";
-
     QByteArray buff;
+
+    StructData data1;
+    data1.value1 = 1;
+    data1.value2 = 2;
+    data1.value3 = 3;
+    data1.value4 = 4;
+    data1.value5 = "Hello PProto";
 
     { //Block for QDataStream
         QDataStream stream1 {&buff, QIODevice::WriteOnly};
         STREAM_INIT(stream1);
 
-        StructData data1;
-        data1.value1 = 1;
-        data1.value2 = 2;
-        data1.value3 = 3;
-        data1.value4 = 4;
-        data1.value5 = "Hello PProto";
 
         stream1 << data1;
     }
 
+    StructData data2;
     { //Block for QDataStream
         QDataStream stream2 {buff};
         STREAM_INIT(stream2);
-
-        StructData data2;
         stream2 >> data2;
-
-        log_info << "value1: " << data2.value1;
-        log_info << "value2: " << data2.value2;
-        log_info << "value3: " << data2.value3;
-        log_info << "value4: " << data2.value4;
-        log_info << "value5: " << data2.value5;
     }
+    log_info << "value1: " << data2.value1;
+    log_info << "value2: " << data2.value2;
+    log_info << "value3: " << data2.value3;
+    log_info << "value4: " << data2.value4;
+    log_info << "value5: " << data2.value5;
 
     alog::stop();
     return 0;
