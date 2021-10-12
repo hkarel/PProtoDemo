@@ -71,8 +71,6 @@ int main(int /*argc*/, char* /*argv*/[])
     { //Block for QDataStream
         QDataStream stream1 {&buff, QIODevice::WriteOnly};
         STREAM_INIT(stream1);
-
-
         stream1 << data1;
     }
 
@@ -82,11 +80,11 @@ int main(int /*argc*/, char* /*argv*/[])
         STREAM_INIT(stream2);
         stream2 >> data2;
     }
-    log_info << "value1: " << data2.value1;
-    log_info << "value2: " << data2.value2;
-    log_info << "value3: " << data2.value3;
-    log_info << "value4: " << data2.value4;
-    log_info << "value5: " << data2.value5;
+    log_info << "Value1: " << data2.value1;
+    log_info << "Value2: " << data2.value2;
+    log_info << "Value3: " << data2.value3;
+    log_info << "Value4: " << data2.value4;
+    log_info << "Value5: " << data2.value5;
 
     alog::stop();
     return 0;

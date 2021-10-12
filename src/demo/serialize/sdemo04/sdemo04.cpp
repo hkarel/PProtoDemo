@@ -120,7 +120,7 @@ namespace alog {
 
 Line& operator<< (Line& line, const pproto::data::Field3& f3)
 {
-    line << '{' << f3.value5 << ", " << f3.value6 << '}';
+    line << log_format("{%?, %?}", f3.value5, f3.value6);
     return line;
 }
 

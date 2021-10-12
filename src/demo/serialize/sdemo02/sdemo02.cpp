@@ -86,6 +86,11 @@ int main(int /*argc*/, char* /*argv*/[])
     dataOld.value1 = 1;
     dataOld.value2 = 2;
 
+    log_info << "---";
+    log_info << "Old struct data";
+    log_info << "Value1: " << dataOld.value1;
+    log_info << "Value2: " << dataOld.value2;
+
     { //Block for QDataStream
         QDataStream stream {&buff, QIODevice::WriteOnly};
         STREAM_INIT(stream);
@@ -99,15 +104,23 @@ int main(int /*argc*/, char* /*argv*/[])
         stream >> dataNew;
     }
     log_info << "---";
-    log_info << "New value1: " << dataNew.value1;
-    log_info << "New value2: " << dataNew.value2;
-    log_info << "New value3: " << dataNew.value3;
-    log_info << "New value4: " << dataNew.value4;
+    log_info << "Deserialization old to new variant";
+    log_info << "Value1: " << dataNew.value1;
+    log_info << "Value2: " << dataNew.value2;
+    log_info << "Value3: " << dataNew.value3;
+    log_info << "Value4: " << dataNew.value4;
 
     dataNew.value1 = 5;
     dataNew.value2 = 6;
     dataNew.value3 = 7;
     dataNew.value4 = 8;
+
+    log_info << "---";
+    log_info << "New struct data";
+    log_info << "Value1: " << dataNew.value1;
+    log_info << "Value2: " << dataNew.value2;
+    log_info << "Value3: " << dataNew.value3;
+    log_info << "Value4: " << dataNew.value4;
 
     buff.clear();
     { //Block for QDataStream
@@ -123,8 +136,9 @@ int main(int /*argc*/, char* /*argv*/[])
         stream >> dataOld2;
     }
     log_info << "---";
-    log_info << "Old value1: " << dataOld2.value1;
-    log_info << "Old value2: " << dataOld2.value2;
+    log_info << "Deserialization new to old variant";
+    log_info << "Value1: " << dataOld2.value1;
+    log_info << "Value2: " << dataOld2.value2;
 
     alog::stop();
     return 0;
