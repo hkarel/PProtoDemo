@@ -120,7 +120,7 @@ int main(int /*argc*/, char* /*argv*/[])
     log_info << "V2 value3: " << dataV2.value3;
 
     dataV2.value1 = 5;
-    dataV2.value2 = "String data";
+    dataV2.value2 = "string data";
     dataV2.value3 = {11,12,13};
 
     log_info << "---";
