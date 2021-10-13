@@ -113,4 +113,38 @@ Project {
             "sdemo10/sdemo10.cpp",
         ]
     }
+
+    SerializeBase {
+        name: "SDemo 11"
+        targetName: "sdemo11"
+        condition: true
+
+        Depends { name: "RapidJson" }
+
+        files: [
+            "sdemo11/sdemo11.cpp",
+        ]
+    }
+
+    SerializeBase {
+        name: "SDemo 12"
+        targetName: "sdemo12"
+        condition: true
+
+        Depends { name: "protobuf" }
+        Depends { name: "RapidJson" }
+
+        cpp.includePaths: [
+            protobuf.generatedFilesDir,
+        ]
+
+        cpp.dynamicLibraries: [
+            "protobuf",
+        ]
+
+        files: [
+            "sdemo12/addressbook.proto",
+            "sdemo12/sdemo12.cpp",
+        ]
+    }
 }
