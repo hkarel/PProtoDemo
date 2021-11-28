@@ -1,3 +1,9 @@
+/**
+  Тест быстродействия механизма сериализации Protobuf на примере телефонной
+  книжки.
+  https://developers.google.com/protocol-buffers/docs/cpptutorial
+*/
+
 #include "addressbook.pb.h"
 
 #include "shared/steady_timer.h"

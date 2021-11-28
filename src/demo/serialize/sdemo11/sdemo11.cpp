@@ -1,6 +1,6 @@
 /**
   Тест быстродействия механизма сериализации PProto на примере телефонной
-  книжки для Protobuf
+  книжки для Protobuf.
   https://developers.google.com/protocol-buffers/docs/cpptutorial
 */
 
