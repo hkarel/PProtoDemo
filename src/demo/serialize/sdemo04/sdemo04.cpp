@@ -16,8 +16,8 @@ namespace data {
 
 struct Field1
 {
-    qint8   value1;
-    quint32 value2;
+    qint8   value1 = {0};
+    quint32 value2 = {0};
 
     DECLARE_B_SERIALIZE_FUNC
 };

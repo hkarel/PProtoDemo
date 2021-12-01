@@ -15,8 +15,8 @@ namespace data {
 
 struct StructDataOld
 {
-    qint8   value1;
-    qint16  value2;
+    qint8  value1 = {0};
+    qint16 value2 = {0};
 
     J_SERIALIZE_BEGIN
         J_SERIALIZE_ITEM( value1 )
@@ -26,10 +26,10 @@ struct StructDataOld
 
 struct StructDataNew
 {
-    qint8   value1;
-    qint16  value2;
-    qint32  value3 = {0};
-    qint64  value4 = {0};
+    qint8  value1 = {0};
+    qint16 value2 = {0};
+    qint32 value3 = {0};
+    qint64 value4 = {0};
 
     J_SERIALIZE_BEGIN
         J_SERIALIZE_ITEM( value1 )

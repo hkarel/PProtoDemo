@@ -16,8 +16,8 @@ namespace data {
 
 struct StructDataV1
 {
-    qint8           value1;
-    quint32         value2;
+    qint8           value1 = {0};
+    quint32         value2 = {0};
     QVector<qint32> value3;
 
     DECLARE_B_SERIALIZE_FUNC
@@ -25,7 +25,7 @@ struct StructDataV1
 
 struct StructDataV2
 {
-    qint8           value1;
+    qint8           value1 = {0};
     QString         value2; // Изменен тип поля
     QVector<qint32> value3;
 

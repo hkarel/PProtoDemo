@@ -15,8 +15,8 @@ namespace data {
 
 struct StructData
 {
-    qint8   value1;
-    qint32  value2;
+    qint8   value1 = {0};
+    qint32  value2 = {0};
     QString value3;
     QUuidEx value4;
     QVector<qint32> value5;

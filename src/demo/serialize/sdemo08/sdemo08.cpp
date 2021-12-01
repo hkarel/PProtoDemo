@@ -15,8 +15,8 @@ namespace data {
 
 struct Field1
 {
-    qint8   value1;
-    quint32 value2;
+    qint8   value1 = {0};
+    quint32 value2 = {0};
 
     J_SERIALIZE_BEGIN
         J_SERIALIZE_ITEM( value1 )
@@ -37,8 +37,8 @@ struct Field2
 
 struct Field3
 {
-    qint16 value5;
-    qint32 value6;
+    qint16 value5 = {0};
+    qint32 value6 = {0};
 
     J_SERIALIZE_BEGIN
         J_SERIALIZE_ITEM( value5 )

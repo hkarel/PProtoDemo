@@ -32,8 +32,8 @@ struct Person
         WORK   = 2,
     };
 
-    QString name;
     qint32  id = {0};
+    QString name;
     QString email;
 
     struct PhoneNumber

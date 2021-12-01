@@ -16,9 +16,9 @@ namespace data {
 
 struct BaseStruct
 {
-    qint8   value1;
-    quint32 value2;
-    quint64 value3;
+    qint8   value1 = {0};
+    quint32 value2 = {0};
+    quint64 value3 = {0};
 
     DECLARE_B_SERIALIZE_FUNC
 };
