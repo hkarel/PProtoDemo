@@ -56,9 +56,6 @@ Project {
         if (useSodium === true)
             def.push("SODIUM_ENCRYPTION");
 
-        if (qbs.buildVariant === "release")
-            def.push("NDEBUG");
-
         return def;
     }
 
