@@ -1,5 +1,5 @@
 /**
-  Простейший пример JSON сериализации
+  Базовый пример JSON сериализации
 */
 
 #include "shared/logger/logger.h"
