@@ -1,4 +1,7 @@
 build
+build_clients
+build_servers
+build_serialize
 
 *.qbs.user*
 *.autosave

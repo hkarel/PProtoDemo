@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>wdemo01_serv.conf</file>
+    </qresource>
+</RCC>
