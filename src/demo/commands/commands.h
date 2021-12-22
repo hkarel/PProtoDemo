@@ -25,6 +25,13 @@ namespace command {
 */
 extern const QUuidEx WebPProtoHello;
 
+/**
+  Команда выполняет комбинированный тест на скорость, и на загрузку TCP буфера
+  короткими сообщениями
+*/
+extern const QUuidEx WebSpeedTest;
+
+
 } // namespace command
 
 //---------------- Структуры данных используемые в сообщениях ----------------
@@ -36,6 +43,21 @@ struct WebPProtoHello : Data<&command::WebPProtoHello,
 {
     QString value;
     J_SERIALIZE_ONE( value )
+};
+
+struct WebSpeedTest : Data<&command::WebSpeedTest,
+                            Message::Type::Command,
+                            Message::Type::Answer>
+{
+    QUuidEx uuid;
+    bool beginTest = {false};
+    bool endTest = {false};
+
+    J_SERIALIZE_BEGIN
+        J_SERIALIZE_ITEM( uuid      )
+        J_SERIALIZE_ITEM( beginTest )
+        J_SERIALIZE_ITEM( endTest   )
+    J_SERIALIZE_END
 };
 
 } // namespace data

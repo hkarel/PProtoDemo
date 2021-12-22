@@ -44,6 +44,7 @@ private:
 
     //--- Обработчики команд ---
     void command_WebPProtoHello(const Message::Ptr&);
+    void command_WebSpeedTest(const Message::Ptr&);
 
 private:
     static QUuidEx _applId;

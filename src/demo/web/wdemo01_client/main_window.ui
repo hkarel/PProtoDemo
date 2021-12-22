@@ -29,13 +29,6 @@
     </property>
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QPushButton" name="btnWebPProtoHello">
-        <property name="text">
-         <string>Command WebPProtoHello</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
@@ -48,6 +41,20 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="btnWebPProtoHello">
+        <property name="text">
+         <string>Command WebPProtoHello</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="btnWebSpeedTest">
+        <property name="text">
+         <string>Comand WebSpeedTest (10 sec)</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

@@ -12,6 +12,7 @@ namespace command {
     const QUuidEx COMMAND = command::Pool::Registry{UUID, #COMMAND, true};
 
 REGISTRY_COMMAND_SINGLPROC(WebPProtoHello,  "b8338344-bec9-4f7d-b8e2-b81a6d4591c7")
+REGISTRY_COMMAND_SINGLPROC(WebSpeedTest,    "59cb5357-80bb-4fa4-a15e-4797a535b50d")
 
 #undef REGISTRY_COMMAND_SINGLPROC
 #undef REGISTRY_COMMAND_MULTIPROC

@@ -3,6 +3,7 @@
 #include "commands/commands.h"
 #include "commands/error.h"
 
+#include "shared/steady_timer.h"
 #include "pproto/commands_base.h"
 #include "pproto/commands_pool.h"
 #include "pproto/func_invoker.h"
@@ -39,6 +40,7 @@ private slots:
     void on_btnClose_clicked(bool);
 
     void on_btnWebPProtoHello_clicked(bool);
+    void on_btnWebSpeedTest_clicked(bool);
 
 
 
@@ -54,6 +56,7 @@ private:
 
     //--- Обработчики команд ---
     void command_WebPProtoHello(const Message::Ptr&);
+    void command_WebSpeedTest(const Message::Ptr&);
 
 private:
     Ui::MainWindow *ui;
@@ -66,4 +69,8 @@ private:
 
     //QUuidEx _taskId;
     //atomic_bool _checkingConnect = {false};
+
+    steady_timer _webSpeedTestTimer;
+    quint32 _webSpeedTestCount;
+    bool _webSpeedTestStop;
 };

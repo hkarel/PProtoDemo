@@ -97,6 +97,18 @@ int main(int argc, char *argv[])
 
         alog::printSaversInfo();
 
+        if (!pproto::command::checkUnique())
+        {
+            stopProgram();
+            return 1;
+        }
+
+        if (!pproto::error::checkUnique())
+        {
+            stopProgram();
+            return 1;
+        }
+
         QApplication appl {argc, argv};
 
         appl.setApplicationDisplayName(APPLICATION_NAME);

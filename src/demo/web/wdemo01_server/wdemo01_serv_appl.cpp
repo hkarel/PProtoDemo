@@ -41,7 +41,7 @@ Application::Application(int& argc, char** argv)
         _funcInvoker.registration(command:: COMMAND, &Application::command_##COMMAND, this);
 
     FUNC_REGISTRATION(WebPProtoHello)
-//    FUNC_REGISTRATION(DockerTaskProgress)
+    FUNC_REGISTRATION(WebSpeedTest)
 
     #undef FUNC_REGISTRATION
 }
@@ -119,5 +119,24 @@ void Application::command_WebPProtoHello(const Message::Ptr& message)
     webPProtoHello.value = "PProto hello!";
 
     writeToJsonMessage(webPProtoHello, answer);
+    tcp::listener().send(answer);
+}
+
+void Application::command_WebSpeedTest(const Message::Ptr& message)
+{
+    //static QUuidEx uuid {QUuid::createUuid()};
+    Message::Ptr answer = message->cloneForAnswer();
+
+    data::WebSpeedTest webSpeedTest;
+    readFromMessage(message, webSpeedTest);
+    //webSpeedTest.uuid = uuid;
+
+    if (webSpeedTest.beginTest)
+        alog::logger().off();
+
+    if (webSpeedTest.endTest)
+        alog::logger().on();
+
+    writeToJsonMessage(webSpeedTest, answer);
     tcp::listener().send(answer);
 }
