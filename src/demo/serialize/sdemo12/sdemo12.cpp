@@ -9,6 +9,7 @@
 #include "shared/steady_timer.h"
 #include "shared/logger/logger.h"
 #include "shared/logger/format.h"
+#include "shared/qt/quuidex.h"
 #include "shared/qt/logger_operators.h"
 
 #include <QtCore>
@@ -125,13 +126,13 @@ int main(int /*argc*/, char* /*argv*/[])
     {
         Person person;
         person.id = i;
-        person.name  = QUuid::createUuid().toString(QUuid::StringFormat::WithoutBraces);
-        person.email = QUuid::createUuid().toString(QUuid::StringFormat::WithoutBraces);
+        person.name  = toString(QUuid::createUuid());
+        person.email = toString(QUuid::createUuid());
 
         for (int j = 0; j < 5; ++j)
         {
             Person::PhoneNumber phoneNumber;
-            phoneNumber.number = QUuid::createUuid().toString(QUuid::StringFormat::WithoutBraces);
+            phoneNumber.number = toString(QUuid::createUuid());
             phoneNumber.type = Person::MOBILE;
             person.phones.append(phoneNumber);
         }

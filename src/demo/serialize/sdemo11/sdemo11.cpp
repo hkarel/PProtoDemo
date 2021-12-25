@@ -7,6 +7,7 @@
 #include "shared/steady_timer.h"
 #include "shared/logger/logger.h"
 #include "shared/logger/format.h"
+#include "shared/qt/quuidex.h"
 #include "shared/qt/logger_operators.h"
 
 #include "pproto/serialize/qbinary.h"
@@ -14,6 +15,8 @@
 #include "pproto/serialize/json.h"
 
 #include <QtCore>
+
+//#define UTF16_TO_UTF8
 
 namespace pproto {
 namespace data {
@@ -77,8 +80,11 @@ struct AddressBook
 bserial::RawVector Person::PhoneNumber::toRaw() const
 {
     B_SERIALIZE_V1(stream)
+#ifdef UTF16_TO_UTF8
+    B_QSTR_TO_UTF8(stream, number);
+#else
     stream << number;
-    //B_QSTR_TO_UTF8(stream, number);
+#endif
     stream << type;
     B_SERIALIZE_RETURN
 }
@@ -86,8 +92,11 @@ bserial::RawVector Person::PhoneNumber::toRaw() const
 void Person::PhoneNumber::fromRaw(const bserial::RawVector& vect)
 {
     B_DESERIALIZE_V1(vect, stream)
+#ifdef UTF16_TO_UTF8
+    B_QSTR_FROM_UTF8(stream, number);
+#else
     stream >> number;
-    //B_QSTR_FROM_UTF8(stream, number);
+#endif
     stream >> type;
     B_DESERIALIZE_END
 }
@@ -111,10 +120,13 @@ bserial::RawVector Person::toRaw() const
 {
     B_SERIALIZE_V1(stream)
     stream << id;
+#ifdef UTF16_TO_UTF8
+    B_QSTR_TO_UTF8(stream, name);
+    B_QSTR_TO_UTF8(stream, email);
+#else
     stream << name;
     stream << email;
-    //B_QSTR_TO_UTF8(stream, name);
-    //B_QSTR_TO_UTF8(stream, email);
+#endif
     stream << phones;
     B_SERIALIZE_RETURN
 }
@@ -123,10 +135,13 @@ void Person::fromRaw(const bserial::RawVector& vect)
 {
     B_DESERIALIZE_V1(vect, stream)
     stream >> id;
+#ifdef UTF16_TO_UTF8
+    B_QSTR_FROM_UTF8(stream, name);
+    B_QSTR_FROM_UTF8(stream, email);
+#else
     stream >> name;
     stream >> email;
-    //B_QSTR_FROM_UTF8(stream, name);
-    //B_QSTR_FROM_UTF8(stream, email);
+#endif
     stream >> phones;
     B_DESERIALIZE_END
 }
@@ -213,13 +228,13 @@ int main(int /*argc*/, char* /*argv*/[])
     {
         Person person;
         person.id = i;
-        person.name  = QUuid::createUuid().toString(QUuid::StringFormat::WithoutBraces);
-        person.email = QUuid::createUuid().toString(QUuid::StringFormat::WithoutBraces);
+        person.name  = toString(QUuid::createUuid());
+        person.email = toString(QUuid::createUuid());
 
         for (int j = 0; j < 5; ++j)
         {
             Person::PhoneNumber phoneNumber;
-            phoneNumber.number = QUuid::createUuid().toString(QUuid::StringFormat::WithoutBraces);
+            phoneNumber.number = toString(QUuid::createUuid());
             phoneNumber.type = Person::MOBILE;
             person.phones.append(phoneNumber);
         }
