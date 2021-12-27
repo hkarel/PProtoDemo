@@ -84,6 +84,7 @@ void MainWindow::on_btnConnect_clicked(bool)
         return;
 
     QHostAddress hostAddress {"127.0.0.1"};
+    config::readHostAddress("connection.address", hostAddress);
 
     int port = 28052;
     config::base().getValue("connection.port", port);

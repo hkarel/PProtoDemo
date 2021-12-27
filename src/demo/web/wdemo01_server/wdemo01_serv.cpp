@@ -75,7 +75,7 @@ void stopProgram()
 
     tcp::listener().close();
 
-    log_info << log_format("'%?' service is stopped", APPLICATION_NAME);
+    log_info << log_format("'%?' is stopped", APPLICATION_NAME);
     alog::stop();
 }
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     // буду неправильно работать.
     qputenv("LC_NUMERIC", "C");
 
-    // Именуем листенеры (опционально)
+    // Именуем листенер (опционально)
     tcp::listener().setName("web-client");
 
     int ret = 0;
@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
         }
 
         log_info << log_format(
-            "'%?' service is running (version: %?; gitrev: %?)",
+            "'%?' is running (version: %?; gitrev: %?)",
             APPLICATION_NAME, productVersion().toString(), GIT_REVISION);
         alog::logger().flush();
 

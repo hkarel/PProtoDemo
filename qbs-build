@@ -1,0 +1,81 @@
+#!/bin/bash
+
+set -u
+
+rebuild=
+print_help=
+build_mode=release
+
+# Директория этого скрипта
+script_dir=$(dirname $(readlink -f $0))
+echo "script_dir: $script_dir"
+
+jobs=$(nproc)
+[ "$jobs" -gt 24 ] && jobs=$(($jobs - 6))
+echo "jobs: $jobs"
+
+function display_help()
+{
+cat << EOF
+Usage: ${0##*/}
+  -h   display this help and exit
+  -r   full rebuild the project
+EOF
+}
+
+# Обработка позиционных параметров:
+#    http://wiki.bash-hackers.org/scripting/posparams
+while test -n ${1:-""}
+do
+    case "$1" in
+        -h)
+            print_help=yes
+            shift
+            ;;
+        -r)
+            rebuild=yes
+            shift
+            ;;
+        -*)
+            echo "Error: Unknown option: $1" >&2
+            exit 1
+            ;;
+        *)  # No more options
+            #break
+            echo "Error: Unknown option: $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
+if [ "$print_help" = "yes" ]; then
+    display_help
+    exit 0
+fi
+
+git_branch=$(git status -b -s | head -n1 | sed 's/\./ /' | cut -d' ' -f2 | sed 's/\//_/g')
+build_config=${build_mode}-${git_branch}
+build_subdir=${build_config}
+build_dir=$script_dir/build/$build_subdir
+
+[ "$rebuild" = "yes"  ] && rm -rf $build_dir
+
+res=$(qbs config --list profiles.pproto_demo)
+if [ -z "$res" ]; then
+    echo "Error: Qbs profile 'pproto_demo' not found"
+    exit 1
+fi
+
+#
+# Сборка проекта
+#
+set -e
+qbs build \
+    --file pproto_demo_project.qbs \
+    --build-directory ./build \
+    --command-echo-mode command-line \
+    --jobs $jobs \
+    --no-install \
+    qbs.buildVariant:$build_mode \
+    config:$build_config \
+    profile:pproto_demo
