@@ -18,11 +18,11 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <google/protobuf/util/time_util.h>
+//#include <google/protobuf/util/time_util.h>
 
 using namespace std;
 
-using google::protobuf::util::TimeUtil;
+//using google::protobuf::util::TimeUtil;
 
 struct Person
 {
@@ -117,11 +117,11 @@ int main(int /*argc*/, char* /*argv*/[])
     // compatible with the version of the headers we compiled against.
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-    int sum = 0;
+    //int sum = 0;
     steady_timer timer;
     AddressBook addressBookGen;
 
-    // Add an address
+    // Generation of addresses
     for (int i = 0; i < 100'000; ++i)
     {
         Person person;
@@ -138,13 +138,13 @@ int main(int /*argc*/, char* /*argv*/[])
         }
         addressBookGen.people.append(person);
     }
-    log_info << "Generate test data: " << timer.elapsed();
-    sum += timer.elapsed();
+    log_info << "Generation of addresses: " << timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
     tutorial::AddressBook address_book;
-    // Add an address.
+    // Add an address
     for (int i = 0; i < addressBookGen.people.count(); ++i)
     {
         const Person& pers = addressBookGen.people[i];
@@ -163,17 +163,17 @@ int main(int /*argc*/, char* /*argv*/[])
         }
     }
     log_debug << "Filling data to protobuf: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
-    size_t buffSize = address_book.ByteSizeLong();
+    int buffSize = address_book.ByteSize();
     QByteArray buff;
     buff.resize(buffSize);
     address_book.SerializeToArray((char*)buff.constData(), buffSize);
 
     log_debug << "Serializing: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -185,7 +185,7 @@ int main(int /*argc*/, char* /*argv*/[])
 
     log_debug << "Write to disk: " << timer.elapsed()
               << " (/tmp/address_book.protobuf)";
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -193,7 +193,7 @@ int main(int /*argc*/, char* /*argv*/[])
     address_book2.ParseFromArray((char*)buff.constData(), buffSize);
 
     log_info << "Deserializing: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     AddressBook addressBook;
 
@@ -222,9 +222,9 @@ int main(int /*argc*/, char* /*argv*/[])
     (void) addressBook;
 
     log_debug << "Filling AddressBook struct: " << timer.elapsed();
-    sum += timer.elapsed();
 
-    log_debug << "Sum: " << sum;
+    //sum += timer.elapsed();
+    //log_debug << "Sum: " << sum;
 
     // Optional:  Delete all global objects allocated by libprotobuf.
     google::protobuf::ShutdownProtobufLibrary();

@@ -1,4 +1,5 @@
 import qbs
+import QbsUtl
 
 Product {
     type: "application"
@@ -6,6 +7,7 @@ Product {
     destinationDirectory: "./bin"
 
     Depends { name: "cpp" }
+    Depends { name: "cppstdlib" }
     Depends { name: "PProto" }
     Depends { name: "SharedLib" }
     Depends { name: "Yaml" }
@@ -16,4 +18,9 @@ Product {
 
     // Декларация для подавления Qt warning-ов
     cpp.systemIncludePaths: Qt.core.cpp.includePaths
+
+    cpp.rpaths: QbsUtl.concatPaths(
+        cppstdlib.path
+       ,"$ORIGIN/../lib"
+    )
 }

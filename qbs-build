@@ -5,6 +5,7 @@ set -u
 rebuild=
 print_help=
 build_mode=release
+need_packages=
 
 # Директория этого скрипта
 script_dir=$(dirname $(readlink -f $0))
@@ -51,6 +52,23 @@ done
 if [ "$print_help" = "yes" ]; then
     display_help
     exit 0
+fi
+
+function check_need_package()
+{
+    dpkg -s $1 &> /dev/null
+    [ "$?" -ne 0 ] && need_packages="$need_packages $1"
+}
+
+# Необходимые пакеты
+check_need_package 'libprotobuf-dev'
+check_need_package 'protobuf-compiler'
+
+if [ -n "$need_packages" ]; then
+    echo "Error: Need to install packages:$need_packages"
+    echo "    Use: sudo apt-get install $need_packages"
+    echo ""
+    exit 1
 fi
 
 git_branch=$(git status -b -s | head -n1 | sed 's/\./ /' | cut -d' ' -f2 | sed 's/\//_/g')

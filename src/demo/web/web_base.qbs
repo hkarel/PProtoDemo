@@ -8,6 +8,7 @@ Product {
     destinationDirectory: "./bin"
 
     Depends { name: "cpp" }
+    Depends { name: "cppstdlib" }
     Depends { name: "lib.sodium" }
     Depends { name: "Commands" }
     Depends { name: "PProto" }
@@ -34,7 +35,8 @@ Product {
     cpp.systemIncludePaths: Qt.core.cpp.includePaths
 
     cpp.rpaths: QbsUtl.concatPaths(
-        lib.sodium.libraryPath
+        cppstdlib.path
+       ,lib.sodium.libraryPath
        ,"$ORIGIN/../lib"
     )
 

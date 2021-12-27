@@ -219,11 +219,11 @@ int main(int /*argc*/, char* /*argv*/[])
 
     log_info << "Start 'Serialize Demo 11'";
 
-    int sum = 0;
+    //int sum = 0;
     steady_timer timer;
     AddressBook addressBookGen;
 
-    // Add an address
+    // Generation of addresses
     for (int i = 0; i < 100'000; ++i)
     {
         Person person;
@@ -240,14 +240,14 @@ int main(int /*argc*/, char* /*argv*/[])
         }
         addressBookGen.people.append(person);
     }
-    log_info << "Generate test data: " << timer.elapsed();
-    sum += timer.elapsed();
+    log_info << "Generation of addresses: " << timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
     AddressBook addressBook;
 
-    // Add an address'
+    // Add an address
     for (int i = 0; i < 100'000; ++i)
     {
         const Person& pers = addressBookGen.people.at(i);
@@ -268,8 +268,8 @@ int main(int /*argc*/, char* /*argv*/[])
         }
         addressBook.people.append(person);
     }
-    log_info << "Filling data: " << timer.elapsed();
-    //sum += timer.elapsed();
+    log_info << "Filling data to C++ struct: " << timer.elapsed();
+    ////sum += timer.elapsed();
 
     timer.reset();
 
@@ -280,7 +280,7 @@ int main(int /*argc*/, char* /*argv*/[])
         stream << addressBook;
     }
     log_info << "Serializing: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -291,13 +291,13 @@ int main(int /*argc*/, char* /*argv*/[])
         addressBook.serialize(stream);
     }
     log_info << "Direct serializing: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
     QByteArray json = addressBook.toJson();
     log_info << "Serializing to JSON: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -309,7 +309,7 @@ int main(int /*argc*/, char* /*argv*/[])
 
     log_info << "Write to disk: " << timer.elapsed()
              << " (/tmp/address_book.pproto)";
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -320,7 +320,7 @@ int main(int /*argc*/, char* /*argv*/[])
 
     log_info << "Write to disk: " << timer.elapsed()
              << " (/tmp/address_book.direct)";
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -331,7 +331,7 @@ int main(int /*argc*/, char* /*argv*/[])
 
     log_info << "Write JSON to disk: " << timer.elapsed()
              << " (/tmp/address_book.json)";
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -342,7 +342,7 @@ int main(int /*argc*/, char* /*argv*/[])
         stream >> addressBook2;
     }
     log_info << "Deserializing: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -353,7 +353,7 @@ int main(int /*argc*/, char* /*argv*/[])
         addressBookDirect.deserialize(stream);
     }
     log_info << "Direct deserializing: " << timer.elapsed();
-    sum += timer.elapsed();
+    //sum += timer.elapsed();
 
     timer.reset();
 
@@ -361,9 +361,9 @@ int main(int /*argc*/, char* /*argv*/[])
     addressBookJson.fromJson(json);
 
     log_info << "Deserializing from JSON: " << timer.elapsed();
-    sum += timer.elapsed();
 
-    log_info << "Sum: " << sum;
+    //sum += timer.elapsed();
+    //log_info << "Sum: " << sum;
 
     alog::stop();
     return 0;
