@@ -21,6 +21,11 @@ namespace command {
 //----------------------------- Список команд --------------------------------
 
 /**
+  Команда для примера 'TDemo 01'
+*/
+extern const QUuidEx TDemo01;
+
+/**
   Команда возвращает сообщение-приветствие "PProto hello!"
 */
 extern const QUuidEx WebPProtoHello;
@@ -37,6 +42,14 @@ extern const QUuidEx WebSpeedTest;
 //---------------- Структуры данных используемые в сообщениях ----------------
 
 namespace data {
+
+struct TDemo01 : Data<&command::TDemo01,
+                       Message::Type::Command,
+                       Message::Type::Answer>
+{
+    qint32 value1 = {0};
+    DECLARE_B_SERIALIZE_FUNC
+};
 
 struct WebPProtoHello : Data<&command::WebPProtoHello,
                               Message::Type::Answer>

@@ -11,7 +11,6 @@
 #include "shared/thread/thread_utils.h"
 
 #include "pproto/commands_pool.h"
-#include "pproto/logger_operators.h"
 //#include "pproto/transport/udp.h"
 
 #include <unistd.h>
