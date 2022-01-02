@@ -14,4 +14,16 @@ Project {
         ]
     }
 
+    TransportBase {
+        name: "TDemo 02"
+        targetName: "tdemo02"
+        condition: true
+
+        files: [
+            "tdemo02/tdemo02.cpp",
+            "tdemo02/tdemo02_appl.cpp",
+            "tdemo02/tdemo02_appl.h",
+        ]
+    }
+
 }

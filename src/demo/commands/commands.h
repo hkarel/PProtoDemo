@@ -26,6 +26,21 @@ namespace command {
 extern const QUuidEx TDemo01;
 
 /**
+  Команды для примера 'TDemo 02'.
+  TDemo02_01 отправляет данные на сервер, но не предполагает получения данных
+             от сервера (только статус выполнения);
+  TDemo02_02 отправляет данные на сервер и получает данные от сервера;
+  TDemo02_03 отправляет на сервер одну структуру данных, а получает
+             в ответе другую;
+  TDemo02_04 отправляет на сервер только команду (без данных), в ответе
+             приходит статус выполнения с ошибкой (эмуляция ошибки на сервере).
+*/
+extern const QUuidEx TDemo02_01;
+extern const QUuidEx TDemo02_02;
+extern const QUuidEx TDemo02_03;
+extern const QUuidEx TDemo02_04;
+
+/**
   Команда возвращает сообщение-приветствие "PProto hello!"
 */
 extern const QUuidEx WebPProtoHello;
@@ -48,6 +63,38 @@ struct TDemo01 : Data<&command::TDemo01,
                        Message::Type::Answer>
 {
     qint32 value1 = {0};
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo02_01 : Data<&command::TDemo02_01,
+                          Message::Type::Command>
+{
+    qint32 value1 = {0};
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo02_02 : Data<&command::TDemo02_02,
+                          Message::Type::Command,
+                          Message::Type::Answer>
+{
+    qint32  value1 = {0};
+    QString value2;
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo02_03 : Data<&command::TDemo02_03,
+                          Message::Type::Command>
+{
+    qint32 value1 = {0};
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo02_03A /*Answer*/ : Data<&command::TDemo02_03,
+                                      Message::Type::Answer>
+{
+    qint32  value1 = {0};
+    QString value2;
+    QUuidEx value3;
     DECLARE_B_SERIALIZE_FUNC
 };
 

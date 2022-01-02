@@ -12,6 +12,10 @@ namespace command {
     const QUuidEx COMMAND = command::Pool::Registry{UUID, #COMMAND, true};
 
 REGISTRY_COMMAND_SINGLPROC(TDemo01,         "76179ba9-c22d-4959-9c52-e853fbf52db0")
+REGISTRY_COMMAND_SINGLPROC(TDemo02_01,      "6eee6784-3472-4724-a2c0-6053a3010324")
+REGISTRY_COMMAND_SINGLPROC(TDemo02_02,      "6422f74e-73d1-43dc-b4aa-90312a850bc2")
+REGISTRY_COMMAND_SINGLPROC(TDemo02_03,      "5ac9ebf2-4887-44f5-9d23-a7aaa7ccc86d")
+REGISTRY_COMMAND_SINGLPROC(TDemo02_04,      "faed04a6-4654-497b-adbc-8e22eada7655")
 REGISTRY_COMMAND_SINGLPROC(WebPProtoHello,  "b8338344-bec9-4f7d-b8e2-b81a6d4591c7")
 REGISTRY_COMMAND_SINGLPROC(WebSpeedTest,    "59cb5357-80bb-4fa4-a15e-4797a535b50d")
 
@@ -33,6 +37,68 @@ void TDemo01::fromRaw(const bserial::RawVector& vect)
 {
     B_DESERIALIZE_V1(vect, stream)
     stream >> value1;
+    B_DESERIALIZE_END
+}
+
+bserial::RawVector TDemo02_01::toRaw() const
+{
+    B_SERIALIZE_V1(stream)
+    stream << value1;
+    B_SERIALIZE_RETURN
+}
+
+void TDemo02_01::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+    stream >> value1;
+    B_DESERIALIZE_END
+}
+
+bserial::RawVector TDemo02_02::toRaw() const
+{
+    B_SERIALIZE_V1(stream)
+    stream << value1;
+    stream << value2;
+    B_SERIALIZE_RETURN
+}
+
+void TDemo02_02::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+    stream >> value1;
+    stream >> value2;
+    B_DESERIALIZE_END
+}
+
+bserial::RawVector TDemo02_03::toRaw() const
+{
+    B_SERIALIZE_V1(stream)
+    stream << value1;
+    B_SERIALIZE_RETURN
+}
+
+void TDemo02_03::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+    stream >> value1;
+    B_DESERIALIZE_END
+}
+
+bserial::RawVector TDemo02_03A::toRaw() const
+{
+    B_SERIALIZE_V1(stream)
+    stream << value1;
+    stream << value2;
+    stream << value3;
+    B_SERIALIZE_RETURN
+}
+
+void TDemo02_03A::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+    stream >> value1;
+    stream >> value2;
+    stream >> value3;
     B_DESERIALIZE_END
 }
 
