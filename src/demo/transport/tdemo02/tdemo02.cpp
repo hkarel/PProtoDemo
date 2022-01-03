@@ -19,7 +19,7 @@
 #include "pproto/commands_pool.h"
 #include "pproto/transport/tcp.h"
 
-#include <QtCore>
+#include <QNetworkProxy>
 
 using namespace pproto;
 using namespace pproto::transport;
@@ -45,8 +45,9 @@ int main(int argc, char* argv[])
 
     Application appl {argc, argv};
 
-    appl.init();
+    QNetworkProxy::setApplicationProxy(QNetworkProxy::NoProxy);
 
+    appl.init();
     QMetaObject::invokeMethod(&appl, "clietnConnect", Qt::QueuedConnection);
 
     appl.exec();

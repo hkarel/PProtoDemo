@@ -3,9 +3,6 @@
 #include "commands/commands.h"
 #include "commands/error.h"
 
-#include "shared/list.h"
-#include "shared/steady_timer.h"
-
 #include "pproto/func_invoker.h"
 #include "pproto/transport/tcp.h"
 
@@ -30,18 +27,17 @@ public:
 public slots:
     void stop(int exitCode);
     void message(const pproto::Message::Ptr&);
-    //void messageTest(const pproto::Message::Ptr&);
 
-    void clientSocketConnected(pproto::SocketDescriptor);
-    void clientSocketDisconnected(pproto::SocketDescriptor);
+    void socketConnected(pproto::SocketDescriptor);
+    void socketDisconnected(pproto::SocketDescriptor);
 
 private:
     Q_OBJECT
     void timerEvent(QTimerEvent* event) override;
 
     //--- Обработчики команд ---
-    void command_WebPProtoHello(const Message::Ptr&);
-    void command_WebSpeedTest(const Message::Ptr&);
+    void command_TDemo03_01(const Message::Ptr&);
+    void command_TDemo03_02(const Message::Ptr&);
 
 private:
     static QUuidEx _applId;
@@ -51,5 +47,4 @@ private:
     int _stopTimerId = {-1};
 
     FunctionInvoker _funcInvoker;
-
 };

@@ -1,5 +1,4 @@
 #include "wdemo01_serv_appl.h"
-//#include "functions.h"
 
 #include "shared/defmac.h"
 #include "shared/logger/logger.h"
@@ -68,7 +67,6 @@ void stopProgram()
         }
 
 //    STOP_THREAD(udp::socket(),          "TransportUDP", 15)
-//    STOP_THREAD(task::loader(),         "TaskLoader",   15)
 //    STOP_THREAD(task::trainManager(),   "TrainManager", 15)
 
     #undef STOP_THREAD

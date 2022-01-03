@@ -26,4 +26,16 @@ Project {
         ]
     }
 
+    TransportBase {
+        name: "TDemo 03"
+        targetName: "tdemo03_server"
+        condition: true
+
+        files: [
+            "tdemo03/server/tdemo03_serv.cpp",
+            "tdemo03/server/tdemo03_serv_appl.cpp",
+            "tdemo03/server/tdemo03_serv_appl.h",
+        ]
+    }
+
 }

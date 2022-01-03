@@ -41,6 +41,12 @@ extern const QUuidEx TDemo02_03;
 extern const QUuidEx TDemo02_04;
 
 /**
+  Команды для примера 'TDemo 03'
+*/
+extern const QUuidEx TDemo03_01;
+extern const QUuidEx TDemo03_02;
+
+/**
   Команда возвращает сообщение-приветствие "PProto hello!"
 */
 extern const QUuidEx WebPProtoHello;
@@ -96,6 +102,32 @@ struct TDemo02_03A /*Answer*/ : Data<&command::TDemo02_03,
     QString value2;
     QUuidEx value3;
     DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo03_01 : Data<&command::TDemo03_01,
+                          Message::Type::Command,
+                          Message::Type::Answer>
+{
+    qint32  value1 = {0};
+    QString value2;
+
+    J_SERIALIZE_BEGIN
+        J_SERIALIZE_ITEM( value1 )
+        J_SERIALIZE_ITEM( value2 )
+    J_SERIALIZE_END
+};
+
+struct TDemo03_02 : Data<&command::TDemo03_02,
+                          Message::Type::Command,
+                          Message::Type::Answer>
+{
+    qint32  value1 = {0};
+    QUuidEx value2;
+
+    J_SERIALIZE_BEGIN
+        J_SERIALIZE_ITEM( value1 )
+        J_SERIALIZE_ITEM( value2 )
+    J_SERIALIZE_END
 };
 
 struct WebPProtoHello : Data<&command::WebPProtoHello,

@@ -1,19 +1,11 @@
-#include "wdemo01_serv_appl.h"
+#include "tdemo03_serv_appl.h"
 
+#include "shared/spin_locker.h"
 #include "shared/logger/logger.h"
-#include "shared/logger/config.h"
 #include "shared/logger/format.h"
 #include "shared/qt/logger_operators.h"
-#include "shared/thread/thread_pool.h"
-#include "shared/thread/thread_utils.h"
 
 #include "pproto/commands_pool.h"
-//#include "pproto/transport/udp.h"
-
-#include <unistd.h>
-#include <sys/stat.h>
-#include <string>
-#include <thread>
 
 #define log_error_m   alog::logger().error   (alog_line_location, "Application")
 #define log_warn_m    alog::logger().warn    (alog_line_location, "Application")
@@ -36,25 +28,14 @@ Application::Application(int& argc, char** argv)
     #define FUNC_REGISTRATION(COMMAND) \
         _funcInvoker.registration(command:: COMMAND, &Application::command_##COMMAND, this);
 
-    FUNC_REGISTRATION(WebPProtoHello)
-    FUNC_REGISTRATION(WebSpeedTest)
+    FUNC_REGISTRATION(TDemo03_01)
+    FUNC_REGISTRATION(TDemo03_02)
 
     #undef FUNC_REGISTRATION
 }
 
 bool Application::init()
 {
-//    if (config::state().getValue("application.id", _applId, false))
-//    {
-//        log_verbose_m << "Read ApplId: " << _applId;
-//    }
-//    else
-//    {
-//        _applId = QUuidEx::createUuid();
-//        config::state().setValue("application.id", _applId);
-//        config::state().saveFile();
-//        log_verbose_m << "Generated new ApplId: " << _applId;
-//    }
     return true;
 }
 
@@ -82,7 +63,7 @@ void Application::stop(int exitCode)
     stop();
 }
 
-void Application::message(const Message::Ptr& message)
+void Application::message(const pproto::Message::Ptr& message)
 {
     // Не обрабатываем сообщения если приложение получило команду на остановку
     if (_stop)
@@ -99,40 +80,46 @@ void Application::message(const Message::Ptr& message)
     }
 }
 
-void Application::clientSocketConnected(SocketDescriptor /*socketDesc*/)
+void Application::socketConnected(pproto::SocketDescriptor socketDescript)
 {
+    log_debug_m << "Client connection to server. Socket: " << socketDescript;
 }
 
-void Application::clientSocketDisconnected(SocketDescriptor /*socketDesc*/)
+void Application::socketDisconnected(pproto::SocketDescriptor socketDescript)
 {
+    log_debug_m << "Client disconnected from server. Socket: " << socketDescript;
 }
 
-void Application::command_WebPProtoHello(const Message::Ptr& message)
+void Application::command_TDemo03_01(const Message::Ptr& message)
 {
+    data::TDemo03_01 tdemo03_01;
+    readFromMessage(message, tdemo03_01);
+
+    log_debug_m << log_format("TDemo03_01 data: %?, %?",
+                              tdemo03_01.value1, tdemo03_01.value2);
+
     Message::Ptr answer = message->cloneForAnswer();
 
-    data::WebPProtoHello webPProtoHello;
-    webPProtoHello.value = "PProto hello!";
+    tdemo03_01.value1 = 10;
+    tdemo03_01.value2 = "Response";
 
-    writeToJsonMessage(webPProtoHello, answer);
+    writeToJsonMessage(tdemo03_01, answer);
     tcp::listener().send(answer);
 }
 
-void Application::command_WebSpeedTest(const Message::Ptr& message)
+void Application::command_TDemo03_02(const Message::Ptr& message)
 {
-    //static QUuidEx uuid {QUuid::createUuid()};
+    data::TDemo03_02 tdemo03_02;
+    readFromMessage(message, tdemo03_02);
+
+    log_debug_m << log_format("TDemo03_02 data: %?, %?",
+                              tdemo03_02.value1, tdemo03_02.value2);
+
     Message::Ptr answer = message->cloneForAnswer();
 
-    data::WebSpeedTest webSpeedTest;
-    readFromMessage(message, webSpeedTest);
-    //webSpeedTest.uuid = uuid;
+    tdemo03_02.value1 = 15;
+    tdemo03_02.value2 = QUuid::createUuid();
 
-    if (webSpeedTest.beginTest)
-        alog::logger().off();
-
-    if (webSpeedTest.endTest)
-        alog::logger().on();
-
-    writeToJsonMessage(webSpeedTest, answer);
+    writeToJsonMessage(tdemo03_02, answer);
     tcp::listener().send(answer);
 }
