@@ -5,6 +5,7 @@
 #include "tdemo03_serv_appl.h"
 
 #include "shared/logger/logger.h"
+#include "shared/logger/config.h"
 #include "shared/logger/format.h"
 #include "shared/qt/logger_operators.h"
 
@@ -67,19 +68,24 @@ int main(int argc, char* argv[])
     alog::logger().start();
     alog::logger().addSaverStdOut(alog::Level::Debug2);
 
+    // Именуем листенер (опционально)
+    tcp::listener().setName("python-client");
+
 #ifdef MINGW
-        if (!SetConsoleCtrlHandler(stopProgramHandler, TRUE))
-        {
-            log_error << "Could not set control handler";
-            alog::stop();
-            return 1;
-        }
+    if (!SetConsoleCtrlHandler(stopProgramHandler, TRUE))
+    {
+        log_error << "Could not set control handler";
+        alog::stop();
+        return 1;
+    }
 #else
-        signal(SIGTERM, &stopProgramHandler);
-        signal(SIGINT,  &stopProgramHandler);
+    signal(SIGTERM, &stopProgramHandler);
+    signal(SIGINT,  &stopProgramHandler);
 #endif
 
     log_info << "Start 'Transport Demo 03 Server'";
+
+    alog::printSaversInfo();
 
     if (!pproto::command::checkUnique())
     {

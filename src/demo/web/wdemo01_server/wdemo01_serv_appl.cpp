@@ -112,7 +112,7 @@ void Application::command_WebPProtoHello(const Message::Ptr& message)
     Message::Ptr answer = message->cloneForAnswer();
 
     data::WebPProtoHello webPProtoHello;
-    webPProtoHello.value = "PProto hello!";
+    webPProtoHello.value = "Hello PProto-Web!";
 
     writeToJsonMessage(webPProtoHello, answer);
     tcp::listener().send(answer);

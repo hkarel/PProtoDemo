@@ -42,11 +42,6 @@ private slots:
     void on_btnWebPProtoHello_clicked(bool);
     void on_btnWebSpeedTest_clicked(bool);
 
-
-
-    //void checkConnect();
-    //void internalConnect();
-
 private:
     Q_OBJECT
     void closeEvent(QCloseEvent*) override;
@@ -60,15 +55,10 @@ private:
 
 private:
     Ui::MainWindow *ui;
-    //static QUuidEx _applId;
-
     QLabel* _labelConnectStatus;
 
     tcp::Socket::Ptr _socket;
     FunctionInvoker  _funcInvoker;
-
-    //QUuidEx _taskId;
-    //atomic_bool _checkingConnect = {false};
 
     steady_timer _webSpeedTestTimer;
     quint32 _webSpeedTestCount;

@@ -10,7 +10,6 @@ Product {
     Depends { name: "cppstdlib" }
     Depends { name: "PProto" }
     Depends { name: "SharedLib" }
-    Depends { name: "Yaml" }
     Depends { name: "Qt"; submodules: ["core"] }
 
     cpp.defines: project.cppDefines

@@ -10,6 +10,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QHostInfo>
+#include <unistd.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -98,7 +99,30 @@ void MainWindow::on_btnConnect_clicked(bool)
     _socket->setMessageWebFlags(true);
     _socket->setCheckProtocolCompatibility(false);
     _socket->setMessageFormat(SerializeFormat::Json);
+
+    setCursor(Qt::WaitCursor);
+
     _socket->connect();
+
+    int attempts = 0;
+    while (attempts++ < 12 /*ждем 3 сек*/)
+    {
+        qApp->processEvents();
+        usleep(250*1000 /*0.25 сек*/);
+        if (_socket->isConnected())
+            break;
+    }
+    setCursor(Qt::ArrowCursor);
+
+    if (!_socket->isConnected())
+    {
+        _socket->stop();
+        _labelConnectStatus->setText(u8"Disconnected");
+
+        QString msg = u8"Failed connect to host %1:%2";
+        msg = msg.arg(hostAddress.toString()).arg(port);
+        QMessageBox::critical(this, "Error", msg);
+    }
 }
 
 void MainWindow::on_btnDisconnect_clicked(bool)
@@ -123,8 +147,6 @@ void MainWindow::on_btnWebSpeedTest_clicked(bool)
     _webSpeedTestCount = 0;
     _webSpeedTestStop = false;
 
-    alog::logger().off();
-
     Message::Ptr m = createJsonMessage(command::WebSpeedTest);
     //m->setPriority(Message::Priority::High);
 
@@ -132,7 +154,10 @@ void MainWindow::on_btnWebSpeedTest_clicked(bool)
     webSpeedTest.beginTest = true;
 
     writeToJsonMessage(webSpeedTest, m);
-    _socket->send(m);
+    if (!_socket->send(m))
+        return;
+
+    alog::logger().off();
 
     // Комбинированный тест: на скорость, и на загрузку TCP буфера короткими сообщениями
     for (int i = 0; i <= 1000; ++i)
