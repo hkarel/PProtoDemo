@@ -47,7 +47,14 @@ extern const QUuidEx TDemo03_01;
 extern const QUuidEx TDemo03_02;
 
 /**
-  Команда возвращает сообщение-приветствие "PProto hello!"
+  Команды для примера 'TDemo 04'
+*/
+extern const QUuidEx TDemo04_01; // Команда возвращает сообщение-приветствие "Hello PProto-Python!"
+extern const QUuidEx TDemo04_02; // Комбинированный тест: на скорость, и на загрузку TCP буфера
+                                 // короткими сообщениями
+
+/**
+  Команда возвращает сообщение-приветствие "Hello PProto-Web!"
 */
 extern const QUuidEx WebPProtoHello;
 
@@ -130,6 +137,34 @@ struct TDemo03_02 : Data<&command::TDemo03_02,
     J_SERIALIZE_END
 };
 
+struct TDemo04_01 : Data<&command::TDemo04_01,
+                          Message::Type::Command,
+                          Message::Type::Answer>
+{
+    qint32  value1 = {0};
+    QString value2;
+
+    J_SERIALIZE_BEGIN
+        J_SERIALIZE_ITEM( value1 )
+        J_SERIALIZE_ITEM( value2 )
+    J_SERIALIZE_END
+};
+
+struct TDemo04_02 : Data<&command::TDemo04_02,
+                          Message::Type::Command,
+                          Message::Type::Answer>
+{
+    QUuidEx uuid;
+    bool beginTest = {false};
+    bool endTest = {false};
+
+    J_SERIALIZE_BEGIN
+        J_SERIALIZE_ITEM( uuid )
+        J_SERIALIZE_OPT ( beginTest )
+        J_SERIALIZE_OPT ( endTest )
+    J_SERIALIZE_END
+};
+
 struct WebPProtoHello : Data<&command::WebPProtoHello,
                               Message::Type::Answer>
 {
@@ -147,8 +182,8 @@ struct WebSpeedTest : Data<&command::WebSpeedTest,
 
     J_SERIALIZE_BEGIN
         J_SERIALIZE_ITEM( uuid      )
-        J_SERIALIZE_ITEM( beginTest )
-        J_SERIALIZE_ITEM( endTest   )
+        J_SERIALIZE_OPT ( beginTest )
+        J_SERIALIZE_OPT ( endTest   )
     J_SERIALIZE_END
 };
 

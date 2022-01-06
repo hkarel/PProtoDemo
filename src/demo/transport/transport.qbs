@@ -38,4 +38,20 @@ Project {
         ]
     }
 
+    TransportBase {
+        name: "TDemo 04"
+        targetName: "tdemo04_client"
+        condition: true
+
+        Depends { name: "Qt"; submodules: ["widgets"] }
+
+        files: [
+            "tdemo04/client/main_window.cpp",
+            "tdemo04/client/main_window.h",
+            "tdemo04/client/main_window.ui",
+            "tdemo04/client/tdemo04_client.cpp",
+        ]
+    }
+
+
 }
