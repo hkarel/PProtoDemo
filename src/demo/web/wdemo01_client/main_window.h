@@ -10,6 +10,7 @@
 #include "pproto/transport/tcp.h"
 
 #include <QMainWindow>
+#include <QCloseEvent>
 #include <QLabel>
 #include <atomic>
 

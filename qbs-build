@@ -5,6 +5,7 @@ set -u
 rebuild=
 print_help=
 build_mode=release
+qbs_profile=pproto_demo
 need_packages=
 
 # Директория этого скрипта
@@ -54,6 +55,18 @@ if [ "$print_help" = "yes" ]; then
     exit 0
 fi
 
+res=$(qbs config --list profiles.$qbs_profile)
+if [ -z "$res" ]; then
+    echo "Error: Qbs profile '$qbs_profile' not found"
+    exit 1
+fi
+
+function qbs_param()
+{
+    qbs config $1 | cut -d' ' -f2 | sed 's/\"//g'
+}
+qmake_path=$(qbs_param profiles.$qbs_profile.moduleProviders.Qt.qmakeFilePaths)
+
 function check_need_package()
 {
     dpkg -s $1 &> /dev/null
@@ -61,8 +74,22 @@ function check_need_package()
 }
 
 # Необходимые пакеты
+check_need_package 'build-essential'
 check_need_package 'libprotobuf-dev'
 check_need_package 'protobuf-compiler'
+
+if [ "$qmake_path" = "/usr/bin/qmake" ]; then
+    check_need_package 'qt5-default'
+    check_need_package 'qt5-qmake'
+    check_need_package 'qtbase5-dev'
+    check_need_package 'qtbase5-dev-tools'
+    check_need_package 'qtbase5-private-dev'
+    check_need_package 'qttools5-dev'
+    check_need_package 'qttools5-dev-tools'
+    check_need_package 'qtdeclarative5-dev'
+    check_need_package 'qtdeclarative5-dev-tools'
+    check_need_package 'qtdeclarative5-private-dev'
+fi
 
 if [ -n "$need_packages" ]; then
     echo "Error: Need to install packages:$need_packages"
@@ -78,12 +105,6 @@ build_dir=$script_dir/build/$build_subdir
 
 [ "$rebuild" = "yes"  ] && rm -rf $build_dir
 
-res=$(qbs config --list profiles.pproto_demo)
-if [ -z "$res" ]; then
-    echo "Error: Qbs profile 'pproto_demo' not found"
-    exit 1
-fi
-
 #
 # Сборка проекта
 #
@@ -96,4 +117,4 @@ qbs build \
     --no-install \
     qbs.buildVariant:$build_mode \
     config:$build_config \
-    profile:pproto_demo
+    profile:$qbs_profile
