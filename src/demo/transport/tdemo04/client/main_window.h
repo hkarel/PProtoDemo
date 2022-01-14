@@ -4,8 +4,8 @@
 #include "commands/error.h"
 
 #include "shared/steady_timer.h"
-#include "pproto/commands_base.h"
-#include "pproto/commands_pool.h"
+#include "pproto/commands/base.h"
+#include "pproto/commands/pool.h"
 #include "pproto/func_invoker.h"
 #include "pproto/transport/tcp.h"
 

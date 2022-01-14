@@ -5,7 +5,7 @@
 #include "shared/logger/format.h"
 #include "shared/qt/logger_operators.h"
 
-#include "pproto/commands_pool.h"
+#include "pproto/commands/pool.h"
 
 #define log_error_m   alog::logger().error   (alog_line_location, "Application")
 #define log_warn_m    alog::logger().warn    (alog_line_location, "Application")

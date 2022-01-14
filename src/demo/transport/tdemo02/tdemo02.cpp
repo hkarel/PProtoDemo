@@ -16,7 +16,7 @@
 #include "shared/logger/format.h"
 #include "shared/qt/logger_operators.h"
 
-#include "pproto/commands_pool.h"
+#include "pproto/commands/pool.h"
 #include "pproto/transport/tcp.h"
 
 #include <QNetworkProxy>

@@ -1,6 +1,6 @@
 #include "commands.h"
 
-#include "pproto/commands_pool.h"
+#include "pproto/commands/pool.h"
 
 namespace pproto {
 namespace command {

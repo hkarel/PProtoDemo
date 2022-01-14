@@ -9,8 +9,8 @@
 #include "shared/qt/logger_operators.h"
 #include "shared/qt/version_number.h"
 
-#include "pproto/commands_base.h"
-#include "pproto/commands_pool.h"
+#include "pproto/commands/base.h"
+#include "pproto/commands/pool.h"
 #include "pproto/transport/tcp.h"
 
 #include <QNetworkProxy>

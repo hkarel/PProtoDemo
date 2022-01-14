@@ -7,7 +7,7 @@
 #include "shared/thread/thread_pool.h"
 #include "shared/thread/thread_utils.h"
 
-#include "pproto/commands_pool.h"
+#include "pproto/commands/pool.h"
 //#include "pproto/transport/udp.h"
 
 #include <unistd.h>

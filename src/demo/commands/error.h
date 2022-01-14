@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pproto/commands_base.h"
+#include "pproto/commands/base.h"
 
 namespace pproto {
 

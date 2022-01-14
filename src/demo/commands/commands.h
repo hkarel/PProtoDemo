@@ -13,7 +13,7 @@
 #include "shared/clife_base.h"
 #include "shared/clife_ptr.h"
 #include "shared/qt/quuidex.h"
-#include "pproto/commands_base.h"
+#include "pproto/commands/base.h"
 
 namespace pproto {
 namespace command {

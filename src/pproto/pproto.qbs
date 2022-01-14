@@ -32,6 +32,14 @@ Product {
     )
 
     files: [
+        "pproto/commands/base.cpp",
+        "pproto/commands/base.h",
+        "pproto/commands/paging.cpp",
+        "pproto/commands/paging.h",
+        "pproto/commands/pool.cpp",
+        "pproto/commands/pool.h",
+        "pproto/commands/time_range.cpp",
+        "pproto/commands/time_range.h",
         "pproto/serialize/byte_array.cpp",
         "pproto/serialize/byte_array.h",
         "pproto/serialize/functions.cpp",
@@ -50,10 +58,6 @@ Product {
         //"pproto/transport/udp.cpp",
         //"pproto/transport/udp.h",
         "pproto/bserialize_space.h",
-        "pproto/commands_base.cpp",
-        "pproto/commands_base.h",
-        "pproto/commands_pool.cpp",
-        "pproto/commands_pool.h",
         "pproto/error_sender.h",
         "pproto/func_invoker.h",
         "pproto/host_point.cpp",
