@@ -42,8 +42,8 @@ DECL_ERROR_CODE(lost_connect_to_service,      40, "1a5a0504-23d9-4c7b-9f9d-fae87
 DECL_ERROR_CODE(json_parse_error,             50, "fd665c40-c2e1-4697-b673-b15e6db9c846", "Ошибка разбора json-выражения")
 
 //--- 60 Ошибки по работе с примерами ---
-DECL_ERROR_CODE(tdemo02_04_bad,               60, "217f6c84-5981-49f4-a30d-f6a2f3a3ab84", "Bad executed demo-command TDemo02_04")
-
+DECL_ERROR_CODE(tdemo02_04_bad,               60, "217f6c84-5981-49f4-a30d-f6a2f3a3ab84", "Bad executed demo-command (TDemo02_04)")
+DECL_ERROR_CODE(tdemo05_send_timeout,         60, "2cc3f31e-f304-4dc3-90d4-eff974a353db", "Timeout expired for response from client (TDemo05_SendChunk)")
 
 
 } // namespace error

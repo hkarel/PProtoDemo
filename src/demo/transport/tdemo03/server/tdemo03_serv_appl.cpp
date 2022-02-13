@@ -50,7 +50,6 @@ void Application::timerEvent(QTimerEvent* event)
         if (_stop)
         {
             KILL_TIMER(_stopTimerId);
-
             exit(_exitCode);
             return;
         }

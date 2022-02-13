@@ -54,6 +54,14 @@ extern const QUuidEx TDemo04_02; // Комбинированный тест: н�
                                  // короткими сообщениями
 
 /**
+  Команды для примера 'TDemo 05'
+*/
+extern const QUuidEx TDemo05_GetData;    // Отправляет запрос на сервер для получения данных
+extern const QUuidEx TDemo05_SendChunk;  // Отправляет чанк данных клиенту
+extern const QUuidEx TDemo05_SendFinish; // Сигнализирует об окончании пересылки данных
+extern const QUuidEx TDemo05_SendError;  // Сигнализирует о неудаче при пересылке данных
+
+/**
   Команда возвращает сообщение-приветствие "Hello PProto-Web!"
 */
 extern const QUuidEx WebPProtoHello;
@@ -165,6 +173,44 @@ struct TDemo04_02 : Data<&command::TDemo04_02,
     J_SERIALIZE_END
 };
 
+struct TDemo05_GetData : Data<&command::TDemo05_GetData,
+                               Message::Type::Command,
+                               Message::Type::Answer>
+{
+    // Количество чанков (возвращается в ответе)
+    qint32 chunkCount = {0};
+
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo05_SendChunk : Data<&command::TDemo05_SendChunk,
+                                 Message::Type::Command>
+{
+    // Индекс чанка
+    qint32 index = {0};
+
+    // Данные чанка
+    quint32 data = {0};
+
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo05_SendFinish : Data<&command::TDemo05_SendFinish,
+                                  Message::Type::Command>
+{
+    // Контрольная сумма
+    quint32 crc = {0};
+
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo05_SendError : Data<&command::TDemo05_SendError,
+                                 Message::Type::Command>
+{
+    ErrorInfo errorInfo;
+    DECLARE_B_SERIALIZE_FUNC
+};
+
 struct WebPProtoHello : Data<&command::WebPProtoHello,
                               Message::Type::Answer>
 {
@@ -189,5 +235,3 @@ struct WebSpeedTest : Data<&command::WebSpeedTest,
 
 } // namespace data
 } // namespace pproto
-
-

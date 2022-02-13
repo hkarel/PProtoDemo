@@ -206,7 +206,6 @@ void Application::serverMessage(const pproto::Message::Ptr& message)
         writeToMessage(error::tdemo02_04_bad, answer);
         tcp::listener().send(answer);
     }
-
 }
 
 void Application::clientSocketConnected(pproto::SocketDescriptor socketDescript)
@@ -239,4 +238,3 @@ void Application::serverSocketDisconnected(pproto::SocketDescriptor socketDescri
 {
     log_debug_m << "Server: client closed connection. Socket: " << socketDescript;
 }
-

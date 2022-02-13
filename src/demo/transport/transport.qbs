@@ -53,5 +53,16 @@ Project {
         ]
     }
 
+    TransportBase {
+        name: "TDemo 05"
+        targetName: "tdemo05"
+        condition: true
+
+        files: [
+            "tdemo05/tdemo05.cpp",
+            "tdemo05/tdemo05_appl.cpp",
+            "tdemo05/tdemo05_appl.h",
+        ]
+    }
 
 }
