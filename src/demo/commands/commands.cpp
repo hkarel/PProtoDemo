@@ -17,6 +17,8 @@ REGISTRY_COMMAND_SINGLPROC(TDemo02_01,         "6eee6784-3472-4724-a2c0-6053a301
 REGISTRY_COMMAND_SINGLPROC(TDemo02_02,         "6422f74e-73d1-43dc-b4aa-90312a850bc2")
 REGISTRY_COMMAND_SINGLPROC(TDemo02_03,         "5ac9ebf2-4887-44f5-9d23-a7aaa7ccc86d")
 REGISTRY_COMMAND_SINGLPROC(TDemo02_04,         "faed04a6-4654-497b-adbc-8e22eada7655")
+REGISTRY_COMMAND_SINGLPROC(TDemo02_05,         "be816a45-1449-4a95-bc19-18d61bc50946")
+REGISTRY_COMMAND_SINGLPROC(TDemo02_06,         "48d32586-2cf0-4721-a7c4-d7c6d5191db9")
 
 REGISTRY_COMMAND_SINGLPROC(TDemo03_01,         "ae2347f4-788b-4135-961c-166a3b49d65f")
 REGISTRY_COMMAND_SINGLPROC(TDemo03_02,         "114949cb-2b6a-48f4-a5a4-15a682b2f45a")
@@ -112,6 +114,54 @@ void TDemo02_03A::fromRaw(const bserial::RawVector& vect)
     stream >> value1;
     stream >> value2;
     stream >> value3;
+    B_DESERIALIZE_END
+}
+
+bserial::RawVector TDemo02_05_Error::toRaw() const
+{
+    B_SERIALIZE_V1(stream)
+
+    // Структуры унаследованные от MessageError сериализуются в особом порядке,
+    // поэтому для них сериализация/десериализация базового класса не обязательна
+    // stream << B_BASE_CLASS(MessageError);
+
+    stream << extCode;
+    B_SERIALIZE_RETURN
+}
+
+void TDemo02_05_Error::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+
+    // Структуры унаследованные от MessageError сериализуются в особом порядке,
+    // поэтому для них сериализация/десериализация базового класса не обязательна
+    // stream >> B_BASE_CLASS(MessageError);
+
+    stream >> extCode;
+    B_DESERIALIZE_END
+}
+
+bserial::RawVector TDemo02_06_Failed::toRaw() const
+{
+    B_SERIALIZE_V1(stream)
+
+    // Структуры унаследованные от MessageFailed сериализуются в особом порядке,
+    // поэтому для них сериализация/десериализация базового класса не обязательна
+    // stream << B_BASE_CLASS(MessageFailed);
+
+    stream << extCode;
+    B_SERIALIZE_RETURN
+}
+
+void TDemo02_06_Failed::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+
+    // Структуры унаследованные от MessageFailed сериализуются в особом порядке,
+    // поэтому для них сериализация/десериализация базового класса не обязательна
+    // stream >> B_BASE_CLASS(MessageFailed);
+
+    stream >> extCode;
     B_DESERIALIZE_END
 }
 

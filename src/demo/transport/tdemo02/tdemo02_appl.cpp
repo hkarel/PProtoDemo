@@ -137,6 +137,57 @@ void Application::clientMessage(const pproto::Message::Ptr& message)
         else
             log_debug_m << "Client: TDemo02 success executed";
 
+
+        // Отправляем команду TDemo02_05
+        Message::Ptr m = createMessage(command::TDemo02_05);
+        _clientSocket->send(m);
+    }
+
+    // Обрабатываем команду TDemo02_05
+    else if (message->command() == command::TDemo02_05)
+    {
+        log_debug_m << "Client: received a answer for command TDemo02_05";
+
+        if (message->execStatus() == Message::ExecStatus::Error)
+        {
+            // Читаем расширенную структуру как обычную
+            data::MessageError err0;
+            readFromMessage(message, err0);
+            log_error_m << err0.description;
+
+            // Читаем расширенную структуру
+            data::TDemo02_05_Error err1;
+            readFromMessage(message, err1);
+            log_error_m << err1.description << ". Extended сode: " << err1.extCode;
+        }
+        else
+            log_debug_m << "Client: TDemo02 success executed";
+
+        // Отправляем команду TDemo02_06
+        Message::Ptr m = createMessage(command::TDemo02_06);
+        _clientSocket->send(m);
+    }
+
+    // Обрабатываем команду TDemo02_06
+    else if (message->command() == command::TDemo02_06)
+    {
+        log_debug_m << "Client: received a answer for command TDemo02_06";
+
+        if (message->execStatus() == Message::ExecStatus::Failed)
+        {
+            // Читаем расширенную структуру как обычную
+            data::MessageFailed fail0;
+            readFromMessage(message, fail0);
+            log_error_m << fail0.description;
+
+            // Читаем расширенную структуру
+            data::TDemo02_06_Failed fail1;
+            readFromMessage(message, fail1);
+            log_error_m << fail1.description << ". Extended сode: " << fail1.extCode;
+        }
+        else
+            log_debug_m << "Client: TDemo02 success executed";
+
         //qApp->quit();
         _clientSocket->disconnect();
     }
@@ -206,6 +257,40 @@ void Application::serverMessage(const pproto::Message::Ptr& message)
         writeToMessage(error::tdemo02_04_bad, answer);
         tcp::listener().send(answer);
     }
+
+    // Обрабатываем команду TDemo02_05
+    else if (message->command() == command::TDemo02_05)
+    {
+        log_debug_m << "Server: received command TDemo02_05";
+
+        // Создаем ответное сообщение
+        Message::Ptr answer = message->cloneForAnswer();
+
+        // Эмулируем расширенную ошибку выполнения команды на сервере
+        data::TDemo02_05_Error err;
+        static_cast<data::MessageError&>(err) = error::tdemo02_05_bad;
+        err.extCode = 15;
+
+        writeToMessage(err, answer);
+        tcp::listener().send(answer);
+    }
+
+    // Обрабатываем команду TDemo02_06
+    else if (message->command() == command::TDemo02_06)
+    {
+        log_debug_m << "Server: received command TDemo02_06";
+
+        // Создаем ответное сообщение
+        Message::Ptr answer = message->cloneForAnswer();
+
+        // Эмулируем неудачное выполнения команды на сервере
+        data::TDemo02_06_Failed fail;
+        static_cast<data::MessageFailed&>(fail) = error::tdemo02_06_fail.asFailed();
+        fail.extCode = 20;
+
+        writeToMessage(fail, answer);
+        tcp::listener().send(answer);
+    }
 }
 
 void Application::clientSocketConnected(pproto::SocketDescriptor socketDescript)
@@ -228,13 +313,12 @@ void Application::clientSocketDisconnected(pproto::SocketDescriptor socketDescri
 void Application::serverSocketConnected(pproto::SocketDescriptor socketDescript)
 {
     log_debug_m << "Server: client connection. Socket: " << socketDescript;
-
-    //qApp->quit();
-    alog::logger().flush();
-    QTimer::singleShot(300, this, &QCoreApplication::quit);
 }
 
 void Application::serverSocketDisconnected(pproto::SocketDescriptor socketDescript)
 {
     log_debug_m << "Server: client closed connection. Socket: " << socketDescript;
+
+    //qApp->quit();
+    QTimer::singleShot(100, this, &QCoreApplication::quit);
 }

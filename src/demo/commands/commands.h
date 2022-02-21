@@ -34,11 +34,18 @@ extern const QUuidEx TDemo01;
              в ответе другую;
   TDemo02_04 отправляет на сервер только команду (без данных), в ответе
              приходит статус выполнения с ошибкой (эмуляция ошибки на сервере).
+  TDemo02_05 отправляет на сервер только команду (без данных), в ответе
+             приходит статус выполнения с расширенной ошибкой.
+  TDemo02_06 отправляет на сервер только команду (без данных), в ответе
+             приходит статус выполнения с расширенной информацией о неудачном
+             выполнении.
 */
 extern const QUuidEx TDemo02_01;
 extern const QUuidEx TDemo02_02;
 extern const QUuidEx TDemo02_03;
 extern const QUuidEx TDemo02_04;
+extern const QUuidEx TDemo02_05;
+extern const QUuidEx TDemo02_06;
 
 /**
   Команды для примера 'TDemo 03'
@@ -116,6 +123,26 @@ struct TDemo02_03A /*Answer*/ : Data<&command::TDemo02_03,
     qint32  value1 = {0};
     QString value2;
     QUuidEx value3;
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+/**
+  Структура с расширенной информацией об ошибке
+*/
+struct TDemo02_05_Error : MessageError, Data<&command::TDemo02_05,
+                                              Message::Type::Answer>
+{
+    quint32 extCode = {0};
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+/**
+  Структура с расширенной информацией о неудачном исполнении
+*/
+struct TDemo02_06_Failed : MessageFailed, Data<&command::TDemo02_06,
+                                                Message::Type::Answer>
+{
+    quint32 extCode = {0};
     DECLARE_B_SERIALIZE_FUNC
 };
 
