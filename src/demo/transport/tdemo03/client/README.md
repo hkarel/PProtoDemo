@@ -5,13 +5,14 @@
 # Установка
 
 ```bash
-$ python3 -m venv path/to/env
-$ source env/bin/activate
-(env) $ python3 -m pip install -r requirements.txt
+# $ python3 -m venv path/to/env
+# $ source env/bin/activate
+# (env) $ python3 -m pip install -r requirements.txt
+/usr/bin/python3 -m pip install -r requirements.txt
 ```
 
 # Запуск примера
 
 ```bash
-(env) $ python3 tdemo03_client.py
+/usr/bin/python3 tdemo03_client.py
 ```
