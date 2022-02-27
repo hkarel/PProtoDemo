@@ -79,6 +79,16 @@ extern const QUuidEx WebPProtoHello;
 */
 extern const QUuidEx WebSpeedTest;
 
+/**
+  Команда отправляет на сервер команду без данных, в ответе приходит статус
+  выполнения с ошибкой (эмуляция ошибки на сервере).
+*/
+extern const QUuidEx WebReturnError;
+
+/**
+  Команда заставляет сервер эмитировать событие WebEmitEvent
+*/
+extern const QUuidEx WebEmitEvent;
 
 } // namespace command
 
@@ -257,6 +267,17 @@ struct WebSpeedTest : Data<&command::WebSpeedTest,
         J_SERIALIZE_ITEM( uuid      )
         J_SERIALIZE_OPT ( beginTest )
         J_SERIALIZE_OPT ( endTest   )
+    J_SERIALIZE_END
+};
+
+struct WebEmitEvent : Data<&command::WebEmitEvent,
+                            Message::Type::Event>
+{
+    QString eventName = {"WebEmitEvent"};
+    quint32 eventData = {50};
+    J_SERIALIZE_BEGIN
+        J_SERIALIZE_ITEM( eventName )
+        J_SERIALIZE_OPT ( eventData )
     J_SERIALIZE_END
 };
 

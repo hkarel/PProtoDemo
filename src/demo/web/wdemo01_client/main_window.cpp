@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     FUNC_REGISTRATION(WebPProtoHello)
     FUNC_REGISTRATION(WebSpeedTest)
+    FUNC_REGISTRATION(WebReturnError)
+    FUNC_REGISTRATION(WebEmitEvent)
 
     #undef FUNC_REGISTRATION
 }
@@ -172,6 +174,18 @@ void MainWindow::on_btnWebSpeedTest_clicked(bool)
     }
 }
 
+void MainWindow::on_btnWebReturnError_clicked(bool)
+{
+    Message::Ptr m = createJsonMessage(command::WebReturnError);
+    _socket->send(m);
+}
+
+void MainWindow::on_btnWebEmitEvent_clicked(bool)
+{
+    Message::Ptr m = createJsonMessage(command::WebEmitEvent);
+    _socket->send(m);
+}
+
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     // В основном окне приложения метод saveGeometry() нужно вызывать в этой
@@ -199,7 +213,8 @@ void MainWindow::command_WebPProtoHello(const Message::Ptr& message)
     data::WebPProtoHello webPProtoHello;
     readFromMessage(message, webPProtoHello);
 
-    QString msg = webPProtoHello.value;
+    QString msg = "Command WebPProtoHello";
+    msg += "\nValue: " + webPProtoHello.value;
     msg += "\n_____________________________________________";
     msg += "\nMessage command:\n" + toString(message->command());
     msg += "\nMessage id:\n" + toString(message->id());
@@ -247,6 +262,39 @@ void MainWindow::command_WebSpeedTest(const Message::Ptr& message)
     alog::logger().on();
 
     int messagesPerSec = _webSpeedTestCount / seconds;
-    QString msg = "WebSpeedTest.\nMessages per second: %1";
+    QString msg = "Command WebSpeedTest.\nMessages per second: %1";
     QMessageBox::information(this, qApp->applicationName(), msg.arg(messagesPerSec));
+}
+
+void MainWindow::command_WebReturnError(const Message::Ptr& message)
+{
+    if (message->execStatus() != Message::ExecStatus::Success)
+    {
+        QString descr = errorDescription(message);
+
+        QString msg = "Command WebReturnError";
+        msg += "\nError description: " + descr;
+        msg += "\n_____________________________________________";
+        msg += "\nMessage command:\n" + toString(message->command());
+        msg += "\nMessage id:\n" + toString(message->id());
+
+        QMessageBox::information(this, "Information", msg);
+    }
+}
+
+void MainWindow::command_WebEmitEvent(const Message::Ptr& message)
+{
+    if (message->type() == Message::Type::Event)
+    {
+        data::WebEmitEvent webEmitEvent;
+        readFromMessage(message, webEmitEvent);
+
+        QString msg = "Event WebEmitEvent";
+        msg += "\nEvent data: " + QString::number(webEmitEvent.eventData);
+        msg += "\n_____________________________________________";
+        msg += "\nMessage command:\n" + toString(message->command());
+        msg += "\nMessage id:\n" + toString(message->id());
+
+        QMessageBox::information(this, "Information", msg);
+    }
 }

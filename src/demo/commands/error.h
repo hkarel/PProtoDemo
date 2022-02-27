@@ -46,7 +46,7 @@ DECL_ERROR_CODE(tdemo02_04_bad,               60, "217f6c84-5981-49f4-a30d-f6a2f
 DECL_ERROR_CODE(tdemo02_05_bad,               60, "d97fa5c9-b855-4637-806a-3df7e1a22a5b", "Bad executed demo-command (TDemo02_05)")
 DECL_ERROR_CODE(tdemo02_06_fail,              60, "a35c790b-fcb3-41e0-8607-3641b1100beb", "Failed executed demo-command (TDemo02_06)")
 DECL_ERROR_CODE(tdemo05_send_timeout,         60, "2cc3f31e-f304-4dc3-90d4-eff974a353db", "Timeout expired for response from client (TDemo05_SendChunk)")
-
+DECL_ERROR_CODE(web_return_error,             60, "07710dfb-2c11-421c-8911-f188dceeabdf", "Return error to web")
 
 } // namespace error
 } // namespace pproto

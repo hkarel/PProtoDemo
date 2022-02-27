@@ -38,6 +38,8 @@ Application::Application(int& argc, char** argv)
 
     FUNC_REGISTRATION(WebPProtoHello)
     FUNC_REGISTRATION(WebSpeedTest)
+    FUNC_REGISTRATION(WebReturnError)
+    FUNC_REGISTRATION(WebEmitEvent)
 
     #undef FUNC_REGISTRATION
 }
@@ -135,4 +137,23 @@ void Application::command_WebSpeedTest(const Message::Ptr& message)
 
     writeToJsonMessage(webSpeedTest, answer);
     tcp::listener().send(answer);
+}
+
+void Application::command_WebReturnError(const Message::Ptr& message)
+{
+    Message::Ptr answer = message->cloneForAnswer();
+
+    writeToJsonMessage(error::web_return_error, answer);
+    tcp::listener().send(answer);
+}
+
+void Application::command_WebEmitEvent(const Message::Ptr& message)
+{
+    Message::Ptr answer = message->cloneForAnswer();
+    tcp::listener().send(answer);
+
+    // Создаем и отправляем событие
+    data::WebEmitEvent webEmitEvent;
+    Message::Ptr event = createJsonMessage(webEmitEvent, Message::Type::Event);
+    tcp::listener().send(event);
 }

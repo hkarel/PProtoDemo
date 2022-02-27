@@ -15,20 +15,29 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="leftMargin">
-     <number>4</number>
-    </property>
-    <property name="topMargin">
-     <number>4</number>
-    </property>
-    <property name="rightMargin">
-     <number>4</number>
-    </property>
-    <property name="bottomMargin">
-     <number>4</number>
-    </property>
     <item>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="btnWebPProtoHello">
+        <property name="text">
+         <string>Command WebPProtoHello</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="btnWebReturnError">
+        <property name="text">
+         <string>Command WebReturnError</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="btnWebSpeedTest">
+        <property name="text">
+         <string>Comand WebSpeedTest (10 sec)</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
@@ -42,17 +51,10 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="btnWebPProtoHello">
+      <item row="3" column="0">
+       <widget class="QPushButton" name="btnWebEmitEvent">
         <property name="text">
-         <string>Command WebPProtoHello</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="btnWebSpeedTest">
-        <property name="text">
-         <string>Comand WebSpeedTest (10 sec)</string>
+         <string>Command WebEmitEvent</string>
         </property>
        </widget>
       </item>

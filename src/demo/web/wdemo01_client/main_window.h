@@ -42,6 +42,8 @@ private slots:
 
     void on_btnWebPProtoHello_clicked(bool);
     void on_btnWebSpeedTest_clicked(bool);
+    void on_btnWebReturnError_clicked(bool);
+    void on_btnWebEmitEvent_clicked(bool);
 
 private:
     Q_OBJECT
@@ -53,6 +55,8 @@ private:
     //--- Обработчики команд ---
     void command_WebPProtoHello(const Message::Ptr&);
     void command_WebSpeedTest(const Message::Ptr&);
+    void command_WebReturnError(const Message::Ptr&);
+    void command_WebEmitEvent(const Message::Ptr&);
 
 private:
     Ui::MainWindow *ui;
