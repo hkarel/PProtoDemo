@@ -31,6 +31,8 @@ REGISTRY_COMMAND_SINGLPROC(TDemo05_SendChunk,  "253dd71f-c4e4-4718-880e-01547656
 REGISTRY_COMMAND_SINGLPROC(TDemo05_SendFinish, "845785c0-9d2a-4351-943e-4d22a84480a5")
 REGISTRY_COMMAND_SINGLPROC(TDemo05_SendError,  "2c9e8369-abb9-4fb7-91d7-42c284622682")
 
+REGISTRY_COMMAND_SINGLPROC(TDemo06,            "ef318990-e980-4903-8b11-38a88631245f")
+
 REGISTRY_COMMAND_SINGLPROC(WebPProtoHello,     "b8338344-bec9-4f7d-b8e2-b81a6d4591c7")
 REGISTRY_COMMAND_SINGLPROC(WebSpeedTest,       "59cb5357-80bb-4fa4-a15e-4797a535b50d")
 REGISTRY_COMMAND_SINGLPROC(WebReturnError,     "30d5b015-4e8f-4f53-a1a0-b36decd71f4f")
@@ -222,6 +224,22 @@ void TDemo05_SendError::fromRaw(const bserial::RawVector& vect)
 {
     B_DESERIALIZE_V1(vect, stream)
     stream >> errorInfo;
+    B_DESERIALIZE_END
+}
+
+bserial::RawVector TDemo06::toRaw() const
+{
+    B_SERIALIZE_V1(stream)
+    stream << info;
+    stream << hostPoint;
+    B_SERIALIZE_RETURN
+}
+
+void TDemo06::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+    stream >> info;
+    stream >> hostPoint;
     B_DESERIALIZE_END
 }
 

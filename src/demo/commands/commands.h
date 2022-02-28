@@ -69,6 +69,11 @@ extern const QUuidEx TDemo05_SendFinish; // Сигнализирует об ок
 extern const QUuidEx TDemo05_SendError;  // Сигнализирует о неудаче при пересылке данных
 
 /**
+  Команда для примера 'TDemo 06'
+*/
+extern const QUuidEx TDemo06; // Отправляет запрос на сервер через UDP сокет
+
+/**
   Команда возвращает сообщение-приветствие "Hello PProto-Web!"
 */
 extern const QUuidEx WebPProtoHello;
@@ -245,6 +250,18 @@ struct TDemo05_SendError : Data<&command::TDemo05_SendError,
                                  Message::Type::Command>
 {
     ErrorInfo errorInfo;
+    DECLARE_B_SERIALIZE_FUNC
+};
+
+struct TDemo06 : Data<&command::TDemo06,
+                       Message::Type::Answer>
+{
+    // Краткая информация об экземпляре
+    QString info;
+
+    // Адрес приложения в локальной сети
+    HostPoint hostPoint;
+
     DECLARE_B_SERIALIZE_FUNC
 };
 
