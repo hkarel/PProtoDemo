@@ -1,3 +1,7 @@
+/**
+  Пример обмена сообщениями между C++ клиентом и Python-сервером
+*/
+
 #include "main_window.h"
 
 #include "shared/logger/logger.h"
