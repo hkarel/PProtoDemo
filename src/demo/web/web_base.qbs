@@ -18,8 +18,9 @@ Product {
     Depends { name: "Qt"; submodules: ["core", "network"] }
 
     lib.sodium.enabled: project.useSodium
+    lib.sodium.useSystem: project.useSystemSodium
     lib.sodium.version: project.sodiumVersion
-    lib.sodium.dynamicLibraries: project.useSodium ? original : []
+    lib.sodium.dynamicLibraries: project.useSodium || project.useSystemSodium ? original : []
 
     ProbExt.LibValidationProbe {
         id: libValidationProbe
@@ -45,7 +46,6 @@ Product {
     )
 
     cpp.dynamicLibraries: QbsUtl.concatPaths(
-        "pthread"
-       ,lib.sodium.dynamicLibraries
+        lib.sodium.dynamicLibraries
     )
 }

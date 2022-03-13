@@ -58,6 +58,9 @@ void Application::deinit()
 void Application::clietnConnect()
 {
     _clientSocket->init({QHostAddress::LocalHost, 33021});
+#ifdef SODIUM_ENCRYPTION
+    _clientSocket->setEncryption(true);
+#endif
     _clientSocket->connect();
 }
 

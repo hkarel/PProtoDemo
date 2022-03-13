@@ -5,7 +5,8 @@ Project {
     minimumQbsVersion: "1.18.0"
     qbsSearchPaths: ["qbs"]
 
-    property bool useSodium: false
+    property bool useSodium: false       // Использовать собранную libsodium (директория расположения /opt/sodium/1.0.18)
+    property bool useSystemSodium: false // Использовать системную libsodium
     property string sodiumVersion: "1.0.18"
 
     readonly property var projectVersion: projectProbe.projectVersion
@@ -51,7 +52,7 @@ Project {
         else
             def.push("CONFIG_DIR=\"/etc/pproto-demo\"");
 
-        if (useSodium === true)
+        if (useSodium === true || useSystemSodium === true)
             def.push("SODIUM_ENCRYPTION");
 
         return def;
