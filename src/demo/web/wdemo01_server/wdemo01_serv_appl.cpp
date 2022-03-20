@@ -40,6 +40,7 @@ Application::Application(int& argc, char** argv)
     FUNC_REGISTRATION(WebSpeedTest)
     FUNC_REGISTRATION(WebReturnError)
     FUNC_REGISTRATION(WebEmitEvent)
+    FUNC_REGISTRATION(WebImageBase64)
 
     #undef FUNC_REGISTRATION
 }
@@ -156,4 +157,29 @@ void Application::command_WebEmitEvent(const Message::Ptr& message)
     data::WebEmitEvent webEmitEvent;
     Message::Ptr event = createJsonMessage(webEmitEvent, Message::Type::Event);
     tcp::listener().send(event);
+}
+
+void Application::command_WebImageBase64(const Message::Ptr& message)
+{
+    data::WebImageBase64 webImageBase64;
+    readFromMessage(message, webImageBase64);
+
+    Message::Ptr answer = message->cloneForAnswer();
+
+    QString imageName = ":/images/images/pproto%1.png";
+    imageName = imageName.arg(webImageBase64.index);
+
+    QFile file;
+    file.setFileName(imageName);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        data::MessageError err = error::web_image.expandDescription(webImageBase64.index);
+        writeToJsonMessage(err, answer);
+    }
+    else
+    {
+        webImageBase64.data = file.readAll().toBase64();
+        writeToJsonMessage(webImageBase64, answer);
+    }
+    tcp::listener().send(answer);
 }

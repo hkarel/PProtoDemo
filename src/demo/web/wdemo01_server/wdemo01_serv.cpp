@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
             QFile file;
             QByteArray conf;
 
-            file.setFileName("://wdemo01_serv.conf");
+            file.setFileName(":/config/wdemo01_serv.conf");
             file.open(QIODevice::ReadOnly);
             conf = file.readAll();
 

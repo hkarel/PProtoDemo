@@ -47,6 +47,7 @@ DECL_ERROR_CODE(tdemo02_05_bad,               60, "d97fa5c9-b855-4637-806a-3df7e
 DECL_ERROR_CODE(tdemo02_06_fail,              60, "a35c790b-fcb3-41e0-8607-3641b1100beb", "Failed executed demo-command (TDemo02_06)")
 DECL_ERROR_CODE(tdemo05_send_timeout,         60, "2cc3f31e-f304-4dc3-90d4-eff974a353db", "Timeout expired for response from client (TDemo05_SendChunk)")
 DECL_ERROR_CODE(web_return_error,             60, "07710dfb-2c11-421c-8911-f188dceeabdf", "Return error to web")
+DECL_ERROR_CODE(web_image,                    60, "d12f3573-28fc-462f-842d-5aee14ddd3d9", "Image with index %1 not found")
 
 } // namespace error
 } // namespace pproto

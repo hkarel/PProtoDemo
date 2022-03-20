@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     FUNC_REGISTRATION(WebSpeedTest)
     FUNC_REGISTRATION(WebReturnError)
     FUNC_REGISTRATION(WebEmitEvent)
+    FUNC_REGISTRATION(WebImageBase64)
 
     #undef FUNC_REGISTRATION
 }
@@ -186,6 +187,15 @@ void MainWindow::on_btnWebEmitEvent_clicked(bool)
     _socket->send(m);
 }
 
+void MainWindow::on_btnWebImageBase64_clicked(bool)
+{
+    data::WebImageBase64 webImageBase64;
+    webImageBase64.index = _imageIndex++;
+
+    Message::Ptr m = createJsonMessage(webImageBase64);
+    _socket->send(m);
+}
+
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     // В основном окне приложения метод saveGeometry() нужно вызывать в этой
@@ -237,6 +247,8 @@ void MainWindow::command_WebSpeedTest(const Message::Ptr& message)
         ++_webSpeedTestCount;
         if (_webSpeedTestCount % 1000 == 0)
         {
+            ui->labelTest->setText(QString::number(_webSpeedTestCount));
+
             for (int i = 0; i <= 1000; ++i)
             {
                 Message::Ptr m = createJsonMessage(command::WebSpeedTest);
@@ -297,4 +309,33 @@ void MainWindow::command_WebEmitEvent(const Message::Ptr& message)
 
         QMessageBox::information(this, "Information", msg);
     }
+}
+
+void MainWindow::command_WebImageBase64(const Message::Ptr& message)
+{
+    if (message->execStatus() != Message::ExecStatus::Success)
+    {
+        _imageIndex = 0;
+        ui->labelImage->setPixmap(QPixmap());
+
+        QString descr = errorDescription(message);
+
+        QString msg = "Command WebImageBase64";
+        msg += "\nError description: " + descr;
+        msg += "\n_____________________________________________";
+        msg += "\nMessage command:\n" + toString(message->command());
+        msg += "\nMessage id:\n" + toString(message->id());
+
+        QMessageBox::critical(this, "Error", msg);
+        return;
+    }
+
+    data::WebImageBase64 webImageBase64;
+    readFromMessage(message, webImageBase64);
+
+    QImage img;
+    img.loadFromData(QByteArray::fromBase64(webImageBase64.data), "PNG");
+
+    QPixmap pixmap = QPixmap::fromImage(img);
+    ui->labelImage->setPixmap(pixmap);
 }

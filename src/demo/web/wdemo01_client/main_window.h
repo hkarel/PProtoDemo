@@ -44,6 +44,7 @@ private slots:
     void on_btnWebSpeedTest_clicked(bool);
     void on_btnWebReturnError_clicked(bool);
     void on_btnWebEmitEvent_clicked(bool);
+    void on_btnWebImageBase64_clicked(bool);
 
 private:
     Q_OBJECT
@@ -57,6 +58,7 @@ private:
     void command_WebSpeedTest(const Message::Ptr&);
     void command_WebReturnError(const Message::Ptr&);
     void command_WebEmitEvent(const Message::Ptr&);
+    void command_WebImageBase64(const Message::Ptr&);
 
 private:
     Ui::MainWindow *ui;
@@ -68,4 +70,5 @@ private:
     steady_timer _webSpeedTestTimer;
     quint32 _webSpeedTestCount;
     bool _webSpeedTestStop;
+    quint32 _imageIndex = {0};
 };

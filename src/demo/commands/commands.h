@@ -95,6 +95,11 @@ extern const QUuidEx WebReturnError;
 */
 extern const QUuidEx WebEmitEvent;
 
+/**
+  Команда возвращает изображение в формате BASE64
+*/
+extern const QUuidEx WebImageBase64;
+
 } // namespace command
 
 //---------------- Структуры данных используемые в сообщениях ----------------
@@ -292,9 +297,23 @@ struct WebEmitEvent : Data<&command::WebEmitEvent,
 {
     QString eventName = {"WebEmitEvent"};
     quint32 eventData = {50};
+
     J_SERIALIZE_BEGIN
         J_SERIALIZE_ITEM( eventName )
         J_SERIALIZE_OPT ( eventData )
+    J_SERIALIZE_END
+};
+
+struct WebImageBase64 : Data<&command::WebImageBase64,
+                              Message::Type::Command,
+                              Message::Type::Answer>
+{
+    quint32 index = {0};
+    QByteArray data;
+
+    J_SERIALIZE_BEGIN
+        J_SERIALIZE_ITEM( index )
+        J_SERIALIZE_OPT ( data  )
     J_SERIALIZE_END
 };
 

@@ -44,6 +44,7 @@ private:
     void command_WebSpeedTest(const Message::Ptr&);
     void command_WebReturnError(const Message::Ptr&);
     void command_WebEmitEvent(const Message::Ptr&);
+    void command_WebImageBase64(const Message::Ptr&);
 
 private:
     static QUuidEx _applId;

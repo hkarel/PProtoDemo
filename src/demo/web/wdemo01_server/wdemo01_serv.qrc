@@ -1,5 +1,10 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/images">
+        <file>images/pproto0.png</file>
+        <file>images/pproto1.png</file>
+        <file>images/pproto2.png</file>
+    </qresource>
+    <qresource prefix="/config">
         <file>wdemo01_serv.conf</file>
     </qresource>
 </RCC>
