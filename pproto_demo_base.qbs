@@ -41,7 +41,6 @@ Project {
             "PPROTO_JSON_SERIALIZE",
             "PPROTO_QBINARY_SERIALIZE",
             "PPROTO_UDP_SIGNATURE=\"PPDM\"",
-            "LOGGER_LESS_SNPRINTF"
         ];
 
         if (qbs.targetOS.contains("windows")
