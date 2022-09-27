@@ -24,14 +24,6 @@ Product {
     // Декларация нужна для подавления Qt warning-ов
     cpp.systemIncludePaths: Qt.core.cpp.includePaths
 
-    cpp.rpaths: QbsUtl.concatPaths(
-        "$ORIGIN/../lib"
-    )
-
-    cpp.dynamicLibraries: [
-        "pthread",
-    ]
-
     files: [
         "shared/config/appl_conf.cpp",
         "shared/config/appl_conf.h",
