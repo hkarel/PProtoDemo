@@ -26,7 +26,7 @@ using namespace pproto::transport;
 
 udp::Socket& socketClient()
 {
-    return ::safe_singleton<udp::Socket, 1>();
+    return safe::singleton<udp::Socket, 1>();
 }
 
 int main(int /*argc*/, char* /*argv*/[])
