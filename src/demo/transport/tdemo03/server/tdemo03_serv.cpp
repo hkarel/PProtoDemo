@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
         stopProgram();
         return 1;
     }
-    //tcp::listener().setMessageWebFlags(true);
+    tcp::listener().setMessageWebFlags(true);
     tcp::listener().setCheckProtocolCompatibility(false);
 
     chk_connect_q(&tcp::listener(), &tcp::Listener::message,
