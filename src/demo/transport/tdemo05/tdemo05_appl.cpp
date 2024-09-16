@@ -192,7 +192,7 @@ void Application::serverMessage(const pproto::Message::Ptr& message)
                     if (answerTimer.elapsed() > 10*1000 /*10 сек*/)
                     {
                         data::TDemo05_SendError tdemo05_SendError;
-                        tdemo05_SendError.errorInfo = error::tdemo05_send_timeout;
+                        tdemo05_SendError.errorInfo.assign(error::tdemo05_send_timeout);
 
                         msg = createMessage(tdemo05_SendError);
                         msg->appendDestinationSocket(message->socketDescriptor());

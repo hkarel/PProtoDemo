@@ -117,6 +117,9 @@ int main(int argc, char* argv[])
     tcp::listener().setMessageWebFlags(true);
     tcp::listener().setCheckProtocolCompatibility(false);
 
+    //tcp::listener().setCompressionLevel(9);
+    //tcp::listener().setCompressionSize(10);
+
     chk_connect_q(&tcp::listener(), &tcp::Listener::message,
                   &appl, &Application::message)
 

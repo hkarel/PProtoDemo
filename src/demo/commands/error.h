@@ -3,9 +3,6 @@
 #include "pproto/commands/base.h"
 
 namespace pproto {
-
-typedef data::MessageError ErrorInfo;
-
 namespace error {
 
 /*** Примеры ошибок взяты с реальной задачи ***/
