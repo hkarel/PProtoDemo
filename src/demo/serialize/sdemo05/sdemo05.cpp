@@ -35,6 +35,11 @@ struct BaseDeserializeDummy : BaseStruct
     DECLARE_B_SERIALIZE_FUNC
 };
 
+struct BaseDeserializeDummy2 : BaseStruct2
+{
+    DECLARE_B_SERIALIZE_FUNC
+};
+
 struct DerivedStruct : BaseStruct, BaseStruct2
 {
     QString value5;
@@ -86,6 +91,15 @@ void BaseDeserializeDummy::fromRaw(const bserial::RawVector& vect)
 {
     B_DESERIALIZE_V1(vect, stream)
     stream >> B_BASE_CLASS(BaseStruct);
+    B_DESERIALIZE_END
+}
+
+void BaseDeserializeDummy2::fromRaw(const bserial::RawVector& vect)
+{
+    B_DESERIALIZE_V1(vect, stream)
+    BaseStruct dummy; (void) dummy;
+    stream >> dummy; // Вычитываем данные по первой базовой структуре
+    stream >> B_BASE_CLASS(BaseStruct2);
     B_DESERIALIZE_END
 }
 
@@ -158,6 +172,18 @@ int main(int /*argc*/, char* /*argv*/[])
     log_info << "Deserialized base data";
     log_info << "Value1: " << baseData.value1;
     log_info << "Value2: " << baseData.value2;
+
+    BaseStruct2 baseData2;
+    { //Block for QDataStream
+        QDataStream stream {buff};
+        STREAM_INIT(stream);
+        stream >> *((BaseDeserializeDummy2*)&baseData2);
+    }
+    log_info << "---";
+    log_info << "Deserialized base data2";
+    log_info << "Value3: " << baseData2.value3;
+    log_info << "Value4: " << baseData2.value4;
+
 
     DerivedStruct dataDerived;
     { //Block for QDataStream
