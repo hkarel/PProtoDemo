@@ -6,7 +6,7 @@
 #include "shared/logger/format.h"
 #include "shared/qt/logger_operators.h"
 
-#include "serialize/json.h"
+#include "pproto/serialize/json.h"
 
 #include <QtCore>
 

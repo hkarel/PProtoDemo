@@ -147,4 +147,17 @@ Project {
             "sdemo12/sdemo12.cpp",
         ]
     }
+
+    SerializeBase {
+        name: "SDemo 13"
+        targetName: "sdemo13"
+        condition: true
+
+        Depends { name: "RapidJson" }
+
+        files: [
+            "sdemo13/sdemo13.cpp",
+        ]
+    }
+
 }
