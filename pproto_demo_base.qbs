@@ -40,6 +40,7 @@ Project {
             "PPROTO_VERSION_HIGH=0",
             "PPROTO_JSON_SERIALIZE",
             "PPROTO_QBINARY_SERIALIZE",
+            "PPROTO_MESSAGE_NEW_JSON_FORMAT",
             "PPROTO_UDP_SIGNATURE=\"PPDM\"",
         ];
 
