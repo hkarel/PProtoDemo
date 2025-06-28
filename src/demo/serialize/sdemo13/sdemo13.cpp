@@ -41,9 +41,9 @@ struct StructList
     J_SERIALIZE_END
 };
 
-bserial::RawVector StructData::toRaw() const
+void StructData::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     B_SERIALIZE_RETURN
@@ -51,22 +51,22 @@ bserial::RawVector StructData::toRaw() const
 
 void StructData::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector StructList::toRaw() const
+void StructList::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << values;
     B_SERIALIZE_RETURN
 }
 
 void StructList::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> values;
     B_DESERIALIZE_END
 }

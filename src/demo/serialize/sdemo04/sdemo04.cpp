@@ -47,9 +47,9 @@ struct StructData
     DECLARE_B_SERIALIZE_FUNC
 };
 
-bserial::RawVector Field1::toRaw() const
+void Field1::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     B_SERIALIZE_RETURN
@@ -57,15 +57,15 @@ bserial::RawVector Field1::toRaw() const
 
 void Field1::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector Field2::toRaw() const
+void Field2::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value3;
     stream << value4;
     B_SERIALIZE_RETURN
@@ -73,15 +73,15 @@ bserial::RawVector Field2::toRaw() const
 
 void Field2::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value3;
     stream >> value4;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector Field3::toRaw() const
+void Field3::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value5;
     stream << value6;
     B_SERIALIZE_RETURN
@@ -89,15 +89,15 @@ bserial::RawVector Field3::toRaw() const
 
 void Field3::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value5;
     stream >> value6;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector StructData::toRaw() const
+void StructData::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << field1;
     stream << field2;
     stream << field3;
@@ -106,7 +106,7 @@ bserial::RawVector StructData::toRaw() const
 
 void StructData::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> field1;
     stream >> field2;
     stream >> field3;

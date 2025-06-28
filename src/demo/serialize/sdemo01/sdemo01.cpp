@@ -26,9 +26,9 @@ struct StructData
     DECLARE_B_SERIALIZE_FUNC
 };
 
-bserial::RawVector StructData::toRaw() const
+void StructData::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     stream << value3;
@@ -39,7 +39,7 @@ bserial::RawVector StructData::toRaw() const
 
 void StructData::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     stream >> value3;

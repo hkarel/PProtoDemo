@@ -46,37 +46,37 @@ REGISTRY_COMMAND_SINGLPROC(WebImageBase64,     "02224ccd-8bef-4473-b45b-f4d9a97f
 
 namespace data {
 
-bserial::RawVector TDemo01::toRaw() const
+void TDemo01::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     B_SERIALIZE_RETURN
 }
 
 void TDemo01::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo02_01::toRaw() const
+void TDemo02_01::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     B_SERIALIZE_RETURN
 }
 
 void TDemo02_01::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo02_02::toRaw() const
+void TDemo02_02::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     B_SERIALIZE_RETURN
@@ -84,29 +84,29 @@ bserial::RawVector TDemo02_02::toRaw() const
 
 void TDemo02_02::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo02_03::toRaw() const
+void TDemo02_03::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     B_SERIALIZE_RETURN
 }
 
 void TDemo02_03::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo02_03A::toRaw() const
+void TDemo02_03A::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     stream << value3;
@@ -115,16 +115,16 @@ bserial::RawVector TDemo02_03A::toRaw() const
 
 void TDemo02_03A::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     stream >> value3;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo02_05_Error::toRaw() const
+void TDemo02_05_Error::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
 
     // Структуры унаследованные от MessageError сериализуются в особом порядке,
     // поэтому для них сериализация/десериализация базового класса не обязательна
@@ -136,7 +136,7 @@ bserial::RawVector TDemo02_05_Error::toRaw() const
 
 void TDemo02_05_Error::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
 
     // Структуры унаследованные от MessageError сериализуются в особом порядке,
     // поэтому для них сериализация/десериализация базового класса не обязательна
@@ -146,9 +146,9 @@ void TDemo02_05_Error::fromRaw(const bserial::RawVector& vect)
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo02_06_Failed::toRaw() const
+void TDemo02_06_Failed::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
 
     // Структуры унаследованные от MessageFailed сериализуются в особом порядке,
     // поэтому для них сериализация/десериализация базового класса не обязательна
@@ -160,7 +160,7 @@ bserial::RawVector TDemo02_06_Failed::toRaw() const
 
 void TDemo02_06_Failed::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
 
     // Структуры унаследованные от MessageFailed сериализуются в особом порядке,
     // поэтому для них сериализация/десериализация базового класса не обязательна
@@ -170,23 +170,23 @@ void TDemo02_06_Failed::fromRaw(const bserial::RawVector& vect)
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo05_GetData::toRaw() const
+void TDemo05_GetData::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << chunkCount;
     B_SERIALIZE_RETURN
 }
 
 void TDemo05_GetData::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> chunkCount;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo05_SendChunk::toRaw() const
+void TDemo05_SendChunk::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << index;
     stream << data;
     B_SERIALIZE_RETURN
@@ -194,43 +194,43 @@ bserial::RawVector TDemo05_SendChunk::toRaw() const
 
 void TDemo05_SendChunk::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> index;
     stream >> data;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo05_SendFinish::toRaw() const
+void TDemo05_SendFinish::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << crc;
     B_SERIALIZE_RETURN
 }
 
 void TDemo05_SendFinish::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> crc;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo05_SendError::toRaw() const
+void TDemo05_SendError::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << errorInfo;
     B_SERIALIZE_RETURN
 }
 
 void TDemo05_SendError::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> errorInfo;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector TDemo06::toRaw() const
+void TDemo06::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << info;
     stream << hostPoint;
     B_SERIALIZE_RETURN
@@ -238,7 +238,7 @@ bserial::RawVector TDemo06::toRaw() const
 
 void TDemo06::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> info;
     stream >> hostPoint;
     B_DESERIALIZE_END

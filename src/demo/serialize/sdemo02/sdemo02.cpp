@@ -21,6 +21,8 @@ struct StructDataOld
     qint16  value2 = {0};
 
     DECLARE_B_SERIALIZE_FUNC
+
+    void toRaw2(QDataStream&) const;
 };
 
 struct StructDataNew
@@ -33,9 +35,9 @@ struct StructDataNew
     DECLARE_B_SERIALIZE_FUNC
 };
 
-bserial::RawVector StructDataOld::toRaw() const
+void StructDataOld::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     B_SERIALIZE_RETURN
@@ -43,15 +45,49 @@ bserial::RawVector StructDataOld::toRaw() const
 
 void StructDataOld::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector StructDataNew::toRaw() const
+void StructDataOld::toRaw2(QDataStream& s) const
 {
-    B_SERIALIZE_V1(stream)
+    bserial::DataStream stream {s.device()};
+
+    QIODevice* device = stream.device();
+    qint64 posBegin = device->pos();
+    quint8 versionCount = 0;
+    stream << versionCount;
+
+    {
+        ++versionCount;
+        //qint64 pos = qbuff->pos();
+        qint64 posDataSize = device->pos();
+        quint32 dataSize = 0;
+        stream << dataSize;
+        qint64 posBeginDataN = device->pos();
+
+        stream << value1;
+        stream << value2;
+
+        qint64 posEndDataN = device->pos();
+        dataSize = posEndDataN - posBeginDataN;
+
+        device->seek(posDataSize);
+        stream << dataSize;
+        device->seek(posEndDataN);
+    }
+
+    qint64 posEnd = device->pos();
+    device->seek(posBegin);
+    stream << versionCount;
+    device->seek(posEnd);
+}
+
+void StructDataNew::toRaw(bserial::DataStream& stream) const
+{
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     stream << value3;
@@ -61,7 +97,7 @@ bserial::RawVector StructDataNew::toRaw() const
 
 void StructDataNew::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     stream >> value3;
@@ -91,11 +127,26 @@ int main(int /*argc*/, char* /*argv*/[])
     log_info << "Value1: " << dataOld.value1;
     log_info << "Value2: " << dataOld.value2;
 
+//    { //Block for QDataStream
+//        QDataStream stream {&buff, QIODevice::WriteOnly};
+//        STREAM_INIT(stream);
+//        stream << dataOld;
+//    }
+
+    //QByteArray buff2;
     { //Block for QDataStream
         QDataStream stream {&buff, QIODevice::WriteOnly};
         STREAM_INIT(stream);
         stream << dataOld;
+        //dataOld.toRaw2(stream);
     }
+
+//    StructDataOld dataOld2_;
+//    { //Block for QDataStream
+//        QDataStream stream {buff2};
+//        STREAM_INIT(stream);
+//        stream >> dataOld2_;
+//    }
 
     StructDataNew dataNew;
     { //Block for QDataStream

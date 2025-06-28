@@ -32,9 +32,9 @@ struct StructDataV2
     DECLARE_B_SERIALIZE_FUNC
 };
 
-bserial::RawVector StructDataV1::toRaw() const
+void StructDataV1::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     stream << value3;
@@ -43,28 +43,28 @@ bserial::RawVector StructDataV1::toRaw() const
 
 void StructDataV1::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     stream >> value3;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector StructDataV2::toRaw() const
+void StructDataV2::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << qHash(value2); // Сохраняем совместимость со старой версией,
                              // записываем какое-то осмысленное значение
     stream << value3;
-    B_SERIALIZE_V2(stream)
+    B_SERIALIZE_V2
     stream << value2;
     B_SERIALIZE_RETURN
 }
 
 void StructDataV2::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
 
     quint32 oldValue2;
@@ -72,7 +72,7 @@ void StructDataV2::fromRaw(const bserial::RawVector& vect)
     value2 = QString::number(oldValue2); // При необходимости можно заполнить
                                          // поле значением из версии V1
     stream >> value3;
-    B_DESERIALIZE_V2(vect, stream)
+    B_DESERIALIZE_V2(vect)
     stream >> value2;
     B_DESERIALIZE_END
 }

@@ -77,9 +77,9 @@ struct AddressBook
 
 //---
 
-bserial::RawVector Person::PhoneNumber::toRaw() const
+void Person::PhoneNumber::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
 #ifdef UTF16_TO_UTF8
     B_QSTR_TO_UTF8(stream, number);
 #else
@@ -91,7 +91,7 @@ bserial::RawVector Person::PhoneNumber::toRaw() const
 
 void Person::PhoneNumber::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
 #ifdef UTF16_TO_UTF8
     B_QSTR_FROM_UTF8(stream, number);
 #else
@@ -103,22 +103,32 @@ void Person::PhoneNumber::fromRaw(const bserial::RawVector& vect)
 
 void Person::PhoneNumber::serialize(QDataStream& stream)
 {
+#ifdef UTF16_TO_UTF8
+    stream << number.toUtf8();
+#else
     stream << number;
+#endif
     stream << static_cast<quint32>(type);
 }
 
 void Person::PhoneNumber::deserialize(QDataStream& stream)
 {
+#ifdef UTF16_TO_UTF8
+    QByteArray numberba;
+    stream >> numberba;
+    number = QString::fromUtf8(numberba);
+#else
     stream >> number;
+#endif
 
     quint32 t;
     stream >> t;
     type = static_cast<PhoneType>(t);
 }
 
-bserial::RawVector Person::toRaw() const
+void Person::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << id;
 #ifdef UTF16_TO_UTF8
     B_QSTR_TO_UTF8(stream, name);
@@ -133,7 +143,7 @@ bserial::RawVector Person::toRaw() const
 
 void Person::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> id;
 #ifdef UTF16_TO_UTF8
     B_QSTR_FROM_UTF8(stream, name);
@@ -149,8 +159,14 @@ void Person::fromRaw(const bserial::RawVector& vect)
 void Person::serialize(QDataStream& stream)
 {
     stream << id;
+
+#ifdef UTF16_TO_UTF8
+    stream << name.toUtf8();
+    stream << email.toUtf8();
+#else
     stream << name;
     stream << email;
+#endif
 
     stream << int(phones.count());
     for (int i = 0; i < phones.count(); ++i)
@@ -160,8 +176,17 @@ void Person::serialize(QDataStream& stream)
 void Person::deserialize(QDataStream& stream)
 {
     stream >> id;
+
+#ifdef UTF16_TO_UTF8
+    QByteArray nameba, emailba;
+    stream >> nameba;
+    stream >> emailba;
+    name = QString::fromUtf8(nameba);
+    email = QString::fromUtf8(emailba);
+#else
     stream >> name;
     stream >> email;
+#endif
 
     int count;
     stream >> count;
@@ -173,16 +198,16 @@ void Person::deserialize(QDataStream& stream)
     }
 }
 
-bserial::RawVector AddressBook::toRaw() const
+void AddressBook::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << people;
     B_SERIALIZE_RETURN
 }
 
 void AddressBook::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> people;
     B_DESERIALIZE_END
 }

@@ -48,9 +48,9 @@ struct DerivedStruct : BaseStruct, BaseStruct2
     DECLARE_B_SERIALIZE_FUNC
 };
 
-bserial::RawVector BaseStruct::toRaw() const
+void BaseStruct::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value1;
     stream << value2;
     B_SERIALIZE_RETURN
@@ -58,15 +58,15 @@ bserial::RawVector BaseStruct::toRaw() const
 
 void BaseStruct::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value1;
     stream >> value2;
     B_DESERIALIZE_END
 }
 
-bserial::RawVector BaseStruct2::toRaw() const
+void BaseStruct2::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << value3;
     stream << value4;
     B_SERIALIZE_RETURN
@@ -74,7 +74,7 @@ bserial::RawVector BaseStruct2::toRaw() const
 
 void BaseStruct2::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> value3;
     stream >> value4;
     B_DESERIALIZE_END
@@ -82,30 +82,30 @@ void BaseStruct2::fromRaw(const bserial::RawVector& vect)
 
 //bserial::RawVector BaseDeserializeDummy::toRaw() const
 //{
-//    B_SERIALIZE_V1(stream)
+//    B_SERIALIZE_V1
 //    stream << B_BASE_CLASS(BaseStruct);
 //    B_SERIALIZE_RETURN
 //}
 
 void BaseDeserializeDummy::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> B_BASE_CLASS(BaseStruct);
     B_DESERIALIZE_END
 }
 
 void BaseDeserializeDummy2::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     BaseStruct dummy; (void) dummy;
     stream >> dummy; // Вычитываем данные по первой базовой структуре
     stream >> B_BASE_CLASS(BaseStruct2);
     B_DESERIALIZE_END
 }
 
-bserial::RawVector DerivedStruct::toRaw() const
+void DerivedStruct::toRaw(bserial::DataStream& stream) const
 {
-    B_SERIALIZE_V1(stream)
+    B_SERIALIZE_V1
     stream << B_BASE_CLASS(BaseStruct);
     stream << B_BASE_CLASS(BaseStruct2);
     stream << value5;
@@ -115,7 +115,7 @@ bserial::RawVector DerivedStruct::toRaw() const
 
 void DerivedStruct::fromRaw(const bserial::RawVector& vect)
 {
-    B_DESERIALIZE_V1(vect, stream)
+    B_DESERIALIZE_V1(vect)
     stream >> B_BASE_CLASS(BaseStruct);
     stream >> B_BASE_CLASS(BaseStruct2);
     stream >> value5;
