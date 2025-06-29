@@ -34,12 +34,12 @@ struct Person
     };
 
     qint32  id = {0};
-    QString name;
-    QString email;
+    string name;
+    string email;
 
     struct PhoneNumber
     {
-        QString number;
+        string number;
         PhoneType type = {PhoneType::MOBILE};
     };
     QVector<PhoneNumber> phones;
@@ -126,13 +126,13 @@ int main(int /*argc*/, char* /*argv*/[])
     {
         Person person;
         person.id = i;
-        person.name  = toString(QUuid::createUuid());
-        person.email = toString(QUuid::createUuid());
+        person.name  = QUuid::createUuid().toByteArray().constData();
+        person.email = QUuid::createUuid().toByteArray().constData();
 
         for (int j = 0; j < 5; ++j)
         {
             Person::PhoneNumber phoneNumber;
-            phoneNumber.number = toString(QUuid::createUuid());
+            phoneNumber.number = QUuid::createUuid().toByteArray().constData();
             phoneNumber.type = Person::MOBILE;
             person.phones.append(phoneNumber);
         }
@@ -151,14 +151,14 @@ int main(int /*argc*/, char* /*argv*/[])
         tutorial::Person* pbperson = address_book.add_people();
 
         pbperson->set_id(pers.id);
-        pbperson->set_name(pers.name.toUtf8().constData());
-        pbperson->set_email(pers.email.toUtf8().constData());
+        pbperson->set_name(pers.name);
+        pbperson->set_email(pers.email);
 
         for (int j = 0; j < pers.phones.count(); ++j)
         {
             const Person::PhoneNumber& pnum = pers.phones[j];
             tutorial::Person::PhoneNumber* phone_number = pbperson->add_phones();
-            phone_number->set_number(pnum.number.toUtf8().constData());
+            phone_number->set_number(pnum.number);
             phone_number->set_type(tutorial::Person::MOBILE);
         }
     }
@@ -204,8 +204,8 @@ int main(int /*argc*/, char* /*argv*/[])
 
         Person person;
         person.id = pers.id();
-        person.name  = QString::fromUtf8(pers.name().c_str());
-        person.email = QString::fromUtf8(pers.email().c_str());
+        person.name  = pers.name();
+        person.email = pers.email();
 
         int phones_size = pers.phones_size();
         for (int j = 0; j < phones_size; ++j)
@@ -213,7 +213,7 @@ int main(int /*argc*/, char* /*argv*/[])
             const ::tutorial::Person_PhoneNumber& pnum = pers.phones(j);
 
             Person::PhoneNumber phoneNumber;
-            phoneNumber.number = QString::fromUtf8(pnum.number().c_str());
+            phoneNumber.number = pnum.number();
             phoneNumber.type = static_cast<Person::PhoneType>(pnum.type()); // Person::MOBILE;
             person.phones.append(phoneNumber);
         }
