@@ -5,10 +5,10 @@ import ProbExt
 Product {
     type: "application"
     consoleApplication: true
-    destinationDirectory: "./bin"
+    destinationDirectory: "bin"
 
     Depends { name: "cpp" }
-    Depends { name: "cppstdlib" }
+  //Depends { name: "cppstdlib" }
     Depends { name: "lib.sodium" }
     Depends { name: "Commands" }
     Depends { name: "PProto" }
@@ -32,12 +32,9 @@ Product {
     cpp.defines: project.cppDefines
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-    // Декларация для подавления Qt warning-ов
-    cpp.systemIncludePaths: Qt.core.cpp.includePaths
-
     cpp.rpaths: QbsUtl.concatPaths(
-        cppstdlib.path
-       ,lib.sodium.libraryPath
+        //cppstdlib.path
+        lib.sodium.libraryPath
        ,"$ORIGIN/../lib"
     )
 

@@ -167,7 +167,7 @@ int main(int /*argc*/, char* /*argv*/[])
 
     timer.reset();
 
-    int buffSize = address_book.ByteSize();
+    int buffSize = address_book.ByteSizeLong();
     QByteArray buff;
     buff.resize(buffSize);
     address_book.SerializeToArray((char*)buff.constData(), buffSize);

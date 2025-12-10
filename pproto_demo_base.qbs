@@ -7,7 +7,7 @@ Project {
 
     property bool useSodium: false       // Использовать собранную libsodium (директория расположения /opt/sodium/1.0.18)
     property bool useSystemSodium: false // Использовать системную libsodium
-    property string sodiumVersion: "1.0.18"
+    property string sodiumVersion: "1.0.20"
 
     readonly property var projectVersion: projectProbe.projectVersion
     readonly property string projectGitRevision: projectProbe.projectGitRevision

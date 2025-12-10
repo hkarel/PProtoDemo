@@ -1,4 +1,5 @@
 import qbs
+import qbs.FileInfo
 import QbsUtl
 
 Product {
@@ -8,27 +9,22 @@ Product {
     type: "staticlibrary"
 
     Depends { name: "cpp" }
-    Depends { name: "lib.sodium" }
     Depends { name: "RapidJson" }
     Depends { name: "SharedLib" }
+    Depends { name: "lib.sodium" }
     Depends { name: "Qt"; submodules: ["core", "network"] }
 
     lib.sodium.enabled: project.useSodium
     lib.sodium.version: project.sodiumVersion
 
     cpp.defines: project.cppDefines
-    cpp.cxxFlags: project.cxxFlags //.concat(["-fPIC"])
+    cpp.cxxFlags: project.cxxFlags
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-    property var includePaths: [
-        "./",
-        "./pproto",
-    ]
-    cpp.includePaths: includePaths;
+    cpp.includePaths: [".", "pproto"]
 
     cpp.systemIncludePaths: QbsUtl.concatPaths(
-        Qt.core.cpp.includePaths // Декларация нужна для подавления Qt warning-ов
-       ,lib.sodium.includePath
+        lib.sodium.includePath
     )
 
     files: [
@@ -40,6 +36,8 @@ Product {
         "pproto/commands/pool.h",
         "pproto/commands/time_range.cpp",
         "pproto/commands/time_range.h",
+        "pproto/commands/time_spec.cpp",
+        "pproto/commands/time_spec.h",
         "pproto/serialize/byte_array.cpp",
         "pproto/serialize/byte_array.h",
         "pproto/serialize/functions.cpp",
@@ -72,6 +70,9 @@ Product {
 
     Export {
         Depends { name: "cpp" }
-        cpp.includePaths: exportingProduct.includePaths
+        cpp.includePaths: [
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "."),
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "pproto"),
+        ]
     }
 }

@@ -1,4 +1,5 @@
 import qbs
+import qbs.FileInfo
 
 Product {
     name: "Commands"
@@ -16,21 +17,18 @@ Product {
     cpp.cxxFlags: project.cxxFlags
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-    property var includePaths: [
-        "../",
-    ]
-    cpp.includePaths: includePaths
-
-    // Эта декларация нужна для подавления Qt warning-ов
-    cpp.systemIncludePaths: Qt.core.cpp.includePaths
+    cpp.includePaths: [".."]
 
     files: [
         "commands.cpp",
         "commands.h",
         "error.h",
     ]
+
     Export {
         Depends { name: "cpp" }
-        cpp.includePaths: exportingProduct.includePaths
+        cpp.includePaths: [
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, ".."),
+        ]
     }
 }

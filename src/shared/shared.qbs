@@ -1,5 +1,5 @@
 import qbs
-import QbsUtl
+import qbs.FileInfo
 
 Product {
     name: "SharedLib"
@@ -12,17 +12,10 @@ Product {
     Depends { name: "Qt"; submodules: ["core", "network"] }
 
     cpp.defines: project.cppDefines
-    cpp.cxxFlags: project.cxxFlags //.concat(["-fPIC"])
+    cpp.cxxFlags: project.cxxFlags
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-    property var includePaths: [
-        "./",
-        "./shared",
-    ]
-    cpp.includePaths: includePaths;
-
-    // Декларация нужна для подавления Qt warning-ов
-    cpp.systemIncludePaths: Qt.core.cpp.includePaths
+    cpp.includePaths: [".", "shared"]
 
     files: [
         "shared/config/appl_conf.cpp",
@@ -36,8 +29,8 @@ Product {
         "shared/logger/format.h",
         "shared/logger/logger.cpp",
         "shared/logger/logger.h",
-        "shared/qt/network/interfaces.cpp",
         "shared/qt/network/interfaces.h",
+        "shared/qt/network/interfaces.cpp",
         "shared/qt/expand_string.h",
         "shared/qt/logger_operators.cpp",
         "shared/qt/logger_operators.h",
@@ -73,6 +66,9 @@ Product {
 
     Export {
         Depends { name: "cpp" }
-        cpp.includePaths: exportingProduct.includePaths
+        cpp.includePaths: [
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "."),
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "shared")
+        ]
     }
 }
