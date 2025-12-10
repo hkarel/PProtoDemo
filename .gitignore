@@ -1,7 +1,4 @@
-build
-build_clients
-build_servers
-build_serialize
+**/build*
 
 *.qbs.user*
 *.autosave
